@@ -1,3 +1,6 @@
+
+
+
 import React, { useState, useEffect } from "react";
 import jg1 from "../../../img/jg1.svg";
 import jg2 from "../../../img/jg2.jpg";
@@ -71,19 +74,39 @@ const Main = () => {
         <img src={brand5} alt="" />
         <img src={brand6} alt="" />
       </div>
-      <div className="product-list flex flex-wrap gap-4">
-  {products.map((product) => (
-    <div key={product.id} className="flex flex-col items-center">
-      <img className="w-56" src={product.bike?.bike1} alt={`Bike 1 - ${product.id}`} />
-      <img className="w-56" src={product.bike?.bike2} alt={`Bike 2 - ${product.id}`} />
-      {product.bike?.bike3 && (
-        <img className="w-56" src={product.bike?.bike3} alt={`Bike 3 - ${product.id}`} />
-      )}
-      <h1 className="text-xl font-bold mt-2">{product.name?.bike1name}</h1>
-    </div>
-  ))}
-</div>
 
+      <div className="product-list grid grid-cols-3 gap-6 p-8">
+        {products.map((product) => {
+      
+          const bikes = [
+            { image: product.bike?.bike1, name: product.name?.bike1name },
+            { image: product.bike?.bike2, name: product.name?.bike2name },
+            { image: product.bike?.bike3, name: product.name?.bike3name },
+          ];
+
+
+          return bikes.map((bike, index) => {
+
+            return (
+              <div
+                key={`${product.id}-bike-${index}`}
+                className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105"
+              >
+                <div className="p-4 flex flex-col items-center">
+                  <img
+                    className="w-56 h-56 object-cover mb-2"
+                    src={bike.image}
+                    alt={`Bike ${index + 1} - ${product.id}`}
+                  />
+                  <h1 className="text-xl font-bold mt-2 text-center">
+                    {bike.name || `Bike ${index + 1}`}
+                  </h1>
+                </div>
+              </div>
+            );
+          });
+        })}
+      </div>
     </div>
   );
 };
