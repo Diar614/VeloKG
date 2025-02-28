@@ -1,13 +1,80 @@
 import React, { useState, useEffect } from "react";
 import Header from "../Header";
 import SearchSidebar from "../SearchSidebar";
-import { useProduct } from "../productd-slice.js/productd-slice";
-import brand1 from "../../../img/brand1.svg";
-import brand2 from "../../../img/brand2.svg";
-import brand3 from "../../../img/brand3.svg";
-import brand4 from "../../../img/brand4.svg";
-import brand5 from "../../../img/brand5.svg";
-import brand6 from "../../../img/brand6.svg";
+import { useProduct } from "../product-slice.js/productd-slice"; 
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { Link } from "react-router-dom";
+
+
+const faqData = [
+  {
+    question: "Каков максимальный клиренс шин?",
+    answer: "29 x 2,6",
+  },
+  {
+    question: "Какой рекомендуемый прогиб?",
+    answer:
+      "Шок: мы рекомендуем примерно 20–35% провисания для этой платформы. Форк: мы рекомендуем примерно 15–20% провисания для этой платформы.",
+  },
+  {
+    question: "Каков максимальный размер кольца цепи?",
+    answer: "Элемент совместим с кольцами-цепочками весом до 36 тонн.",
+  },
+  {
+    question: "Совместим ли елемент UDH?",
+    answer: "Да, этот элемент совместим с UDH.",
+  },
+  {
+    question: "Почему нет хранилища downtuwn?",
+    answer:
+      "Снижение веса рамы было более важным приоритетом. У нас по-прежнему есть крепления для двух бутылок с водой и дополнительные крепления для аксессуаров на раме для всех возможных внешних хранилищ.",
+  },
+  {
+    question: "Каковы размеры удара?",
+    answer: "Элемент совместим только с амортизаторами 190x45 мм.",
+  },
+  {
+    question: "Какой рекомендуемый ход вилки?",
+    answer: "Элемент предназначен для хода вилки от 120 до 140 мм",
+  },
+  {
+    question: "Какой рекомендуемый ход вилки?",
+    answer: "Элемент предназначен для хода вилки от 120 до 140 мм",
+  },
+];
+
+const FAQItem = ({ question, answer }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="border-b border-gray-300 mb-5">
+      <button
+        className={`w-full text-left py-4 px-6 font-bold flex justify-between items-center ${
+          isOpen ? "text-black" : "text-gray-800"
+        }`}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {question}
+        <motion.span
+          initial={{ rotate: 0 }}
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          ▼
+        </motion.span>
+      </button>
+      <motion.div
+        initial={{ height: 0, opacity: 0 }}
+        animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+        className="overflow-hidden px-6"
+      >
+        <p className="pb-4 text-gray-700">{answer}</p>
+      </motion.div>
+    </div>
+  );
+};
 
 const Main = () => {
   const { products, isFetch, getAllProduct } = useProduct();
@@ -19,8 +86,18 @@ const Main = () => {
     "https://bikes.com/cdn/shop/collections/Web_Element1_MRiga_BritishColumbia-06.jpg?v=1717782648&width=2000",
   ];
 
+  const { ref: faqRef, inView: faqInView } = useInView({
+    triggerOnce: false,
+    threshold: 0.2,
+  });
+
+  const { ref: productRef, inView: productInView } = useInView({
+    triggerOnce: false,
+    threshold: 0.2,
+  });
+
   useEffect(() => {
-    getAllProduct();
+    getAllProduct(); 
 
     const handleScroll = () => {
       const image = document.querySelector("img.w-full.h-auto");
@@ -57,11 +134,7 @@ const Main = () => {
           setSearchVisible={setSearchVisible}
           isHeaderVisible={isHeaderVisible}
         />
-        <img
-          className="w-full h-auto"
-          src={slides[currentSlide]}
-          alt="Slider"
-        />
+        <img className="w-full h-auto" src={slides[currentSlide]} alt="" />
       </div>
       <div
         style={{ "--background": "38 32 32", "--text-color": "229 229 229" }}
@@ -94,38 +167,73 @@ const Main = () => {
           </div>
         </div>
       </div>
-
-      <div className="flex justify-between pt-24">
-        {[brand1, brand2, brand3, brand4, brand5, brand6].map(
-          (brand, index) => (
-            <img key={index} src={brand} alt={`Brand ${index + 1}`} />
-          )
-        )}
+      <div className="bg-stone-50 min-h-screen p-6">
+   
+        <div
+          ref={productRef}
+          className={`product-list grid grid-cols-2 gap-6 px-64 pt-52 ${productInView ? "opacity-100" : "opacity-0"}`}
+          style={{ transition: "opacity 1s" }}
+        >
+{products.map((product) => {
+  const { bike, name, description } = product;
+  if (!bike) return null;
+  return Object.keys(bike).map((key, index) => (
+    <Link
+      to={`/product/${product.id}`}  
+      key={`${product.id}-${key}`}
+      className="bg-white shadow-md rounded-md overflow-hidden mx-2"
+    >
+      <div className="relative">
+        <span className="absolute top-1 left-1 bg-black text-white text-xs font-bold px-1 py-0.5 rounded">
+          Новое
+        </span>
+        <img
+          className="w-140 h-85 object-cover"
+          src={bike[key]}
+          alt={name?.[`${key}name`] || `Bike ${index + 1}`}
+        />
       </div>
-      <h1 className="text-5xl font-thin">НОВИНКИ</h1>
+      <div className="p-4 bg-stone-200">
+        <h1 className="text-sm font-bold">
+          {name?.[`${key}name`] || `Bike ${index + 1}`}
+        </h1>
+        <p className="text-gray-600 text-2xs mx-auto">
+          {description ||
+            "Fox 34 Float Performance Elite, Fox Float Performance Elite, Sram Level Bronze Stealth 4 Piston, Sram GX Eagle Transmission Wireless"}
+        </p>
+        <div className="mt-2">
+          <input
+            type="checkbox"
+            id={`compare-${product.id}-${key}`}
+          />
+          <label
+            htmlFor={`compare-${product.id}-${key}`}
+            className="ml-1 text-2xs"
+          >
+            + ДОБАВИТЬ ДЛЯ СРАВНЕНИЯ
+          </label>
+        </div>
+      </div>
+    </Link>
+  ));
+})}
 
-      <div className="product-list grid grid-cols-5 gap-6 p-8">
-        {products.map((product) => {
-          const { bike, name } = product;
-          if (!bike) return null;
-          return Object.keys(bike).map((key, index) => (
-            <div
-              key={`${product.id}-${key}`}
-              className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105"
-            >
-              <div className="p-4 flex flex-col items-center">
-                <img
-                  className="w-56 h-56 object-cover mb-2"
-                  src={bike[key]}
-                  alt={name?.[`${key}name`] || `Bike ${index + 1}`}
-                />
-                <h1 className="text-xl font-bold mt-2 text-center">
-                  {name?.[`${key}name`] || `Bike ${index + 1}`}
-                </h1>
-              </div>
-            </div>
-          ));
-        })}
+        </div>
+
+        <h2 className="text-3xl font-bold text-center mb-4 pt-20">Часто задаваемые вопросы</h2>
+        <div
+          ref={faqRef}
+          className={`w-full h-full relative pt-10 pb-32 ${faqInView ? "opacity-100" : "opacity-0"}`}
+          style={{ transition: "opacity 1s" }}
+        >
+          <div className="p-6 max-w-4xl mx-auto mt-10 bg-stone-100">
+            <h1 className="text-xl">
+              {faqData.map((item, index) => (
+                <FAQItem key={index} {...item} />
+              ))}
+            </h1>
+          </div>
+        </div>
       </div>
     </div>
   );

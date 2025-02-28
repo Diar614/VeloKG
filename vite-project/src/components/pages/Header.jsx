@@ -20,7 +20,7 @@ const Header = ({ isSearchVisible, setSearchVisible }) => {
 
   return (
     <header
-      className={`fixed top-15 left-0 w-full h-16 flex items-center justify-between px-10 transition-all duration-300 z-50 ${
+      className={`fixed top-10 left-0 w-full h-16 flex items-center justify-between px-10 transition-all duration-300 z-50 ${
         isScrolled ? "bg-opacity-80 shadow-md" : "bg-transparent"
       }`}
     >
@@ -39,7 +39,7 @@ const Header = ({ isSearchVisible, setSearchVisible }) => {
           src={magnifier}
           alt="magnifier"
           onClick={() => setSearchVisible(!isSearchVisible)}
-          style={{ width: "25px", height: "25px" }}
+          style={{ width: "20px", height: "25px" }}
         />
         <img
           className="cursor-pointer transition-all duration-300"
