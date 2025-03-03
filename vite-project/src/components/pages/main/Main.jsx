@@ -5,6 +5,7 @@ import { useProduct } from "../product-slice.js/productd-slice";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";
+import Speedometer from "../Speedometer";  
 
 
 const faqData = [
@@ -134,12 +135,19 @@ const Main = () => {
           setSearchVisible={setSearchVisible}
           isHeaderVisible={isHeaderVisible}
         />
-        <img className="w-full h-auto" src={slides[currentSlide]} alt="" />
       </div>
       <div
         style={{ "--background": "38 32 32", "--text-color": "229 229 229" }}
         className="bg-[rgb(var(--background))] text-[rgb(var(--text-color))] p-8 text-center"
       >
+
+        <div className="relative w-full h-[1000px]">
+          <img
+            className="w-full h-full object-cover"
+            src={slides[currentSlide]}
+          />
+        </div>
+
         <h1 className="text-7xl pt-32 font-bold">Будь в своей Стихии.</h1>
         <h1 className="max-w-3xl mx-auto mt-6 text-xl">
           Модель Element, разработанная для достижения идеального баланса между
@@ -148,18 +156,15 @@ const Main = () => {
         </h1>
         <div className="flex justify-center items-center space-x-40 text-4xl mt-10 pb-30 pt-10">
           <div className="flex flex-col items-center">
-            <h1>Пересеченная местность</h1>
+            <h1 className="text-5xl">Пересеченная местность</h1>
             <p className="text-3xl text-gray-400 mt-2">Предназначен для</p>
           </div>
 
-          <h1 className="text-5xl text-gray-500"></h1>
-
           <div className="flex flex-col items-center">
-            <h1>130/120</h1>
-            <p className="text-4xl text-gray-400 mt-2">Ход (мм)</p>
+            <h1 className="text-xl">
+              <Speedometer />  
+            </h1>
           </div>
-
-          <h1 className="text-5xl text-gray-500"></h1>
 
           <div className="flex flex-col items-center">
             <h1>29, 27.5</h1>
@@ -168,56 +173,54 @@ const Main = () => {
         </div>
       </div>
       <div className="bg-stone-50 min-h-screen p-6">
-   
         <div
           ref={productRef}
           className={`product-list grid grid-cols-2 gap-6 px-64 pt-52 ${productInView ? "opacity-100" : "opacity-0"}`}
           style={{ transition: "opacity 1s" }}
         >
-{products.map((product) => {
-  const { bike, name, description } = product;
-  if (!bike) return null;
-  return Object.keys(bike).map((key, index) => (
-    <Link
-      to={`/product/${product.id}`}  
-      key={`${product.id}-${key}`}
-      className="bg-white shadow-md rounded-md overflow-hidden mx-2"
-    >
-      <div className="relative">
-        <span className="absolute top-1 left-1 bg-black text-white text-xs font-bold px-1 py-0.5 rounded">
-          Новое
-        </span>
-        <img
-          className="w-140 h-85 object-cover"
-          src={bike[key]}
-          alt={name?.[`${key}name`] || `Bike ${index + 1}`}
-        />
-      </div>
-      <div className="p-4 bg-stone-200">
-        <h1 className="text-sm font-bold">
-          {name?.[`${key}name`] || `Bike ${index + 1}`}
-        </h1>
-        <p className="text-gray-600 text-2xs mx-auto">
-          {description ||
-            "Fox 34 Float Performance Elite, Fox Float Performance Elite, Sram Level Bronze Stealth 4 Piston, Sram GX Eagle Transmission Wireless"}
-        </p>
-        <div className="mt-2">
-          <input
-            type="checkbox"
-            id={`compare-${product.id}-${key}`}
-          />
-          <label
-            htmlFor={`compare-${product.id}-${key}`}
-            className="ml-1 text-2xs"
-          >
-            + ДОБАВИТЬ ДЛЯ СРАВНЕНИЯ
-          </label>
-        </div>
-      </div>
-    </Link>
-  ));
-})}
-
+          {products.map((product) => {
+            const { bike, name, description } = product;
+            if (!bike) return null;
+            return Object.keys(bike).map((key, index) => (
+              <Link
+                to={`/product/${product.id}`}  
+                key={`${product.id}-${key}`}
+                className="bg-white shadow-md rounded-md overflow-hidden mx-2"
+              >
+                <div className="relative">
+                  <span className="absolute top-1 left-1 bg-black text-white text-xs font-bold px-1 py-0.5 rounded">
+                    Новое
+                  </span>
+                  <img
+                    className="w-140 h-85 object-cover"
+                    src={bike[key]}
+                    alt={name?.[`${key}name`] || `Bike ${index + 1}`}
+                  />
+                </div>
+                <div className="p-4 bg-stone-200">
+                  <h1 className="text-sm font-bold">
+                    {name?.[`${key}name`] || `Bike ${index + 1}`}
+                  </h1>
+                  <p className="text-gray-600 text-2xs mx-auto">
+                    {description ||
+                      "Fox 34 Float Performance Elite, Fox Float Performance Elite, Sram Level Bronze Stealth 4 Piston, Sram GX Eagle Transmission Wireless"}
+                  </p>
+                  <div className="mt-2">
+                    <input
+                      type="checkbox"
+                      id={`compare-${product.id}-${key}`}
+                    />
+                    <label
+                      htmlFor={`compare-${product.id}-${key}`}
+                      className="ml-1 text-2xs"
+                    >
+                      + ДОБАВИТЬ ДЛЯ СРАВНЕНИЯ
+                    </label>
+                  </div>
+                </div>
+              </Link>
+            ));
+          })}
         </div>
 
         <h2 className="text-3xl font-bold text-center mb-4 pt-20">Часто задаваемые вопросы</h2>

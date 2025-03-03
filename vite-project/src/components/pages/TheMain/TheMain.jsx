@@ -25,7 +25,7 @@ const images = [
   {
     src: "https://bikes.com/cdn/shop/files/Web_Altitude_MRiga_RGauvin_KamloopsBC_MRP9972_1.jpg?v=1711491455&width=800",
     title: "Enduro",
-    route: "/enduro"
+        route: "/enduro"
   },
 ];
 
@@ -113,6 +113,7 @@ const TheMain = () => {
           <div className="swiper-button-prev"></div>
           <div className="swiper-button-next"></div>
         </Swiper>
+        
       </div>
     </div>
   );

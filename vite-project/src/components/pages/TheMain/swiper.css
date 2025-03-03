@@ -1,8 +1,8 @@
-/* Кастомизация стрелок */
+
 .swiper-button-prev,
 .swiper-button-next {
   position: absolute;
-  bottom: -30px; /* Перемещаем стрелки вниз */
+  bottom: -30px; 
   background-color: rgba(0, 0, 0, 0.5);
   padding: 10px;
   border-radius: 50%;
