@@ -9,7 +9,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { useInView } from "react-intersection-observer";
 import { Link } from 'react-router-dom'; 
-
+import "../main/styles.css"
 
 const slides = [
   {
@@ -26,7 +26,7 @@ const slides = [
   },
   {
     title: "Велосипеды для кросс-кантри",
-    text: "зда по пересечённой местности (также часто называемая кросс-кантри и велосипедами для кросс-кантри) предполагает быструю езду везде, а не только вниз по склону. В отличие от эндуро или скоростного спуска, езда по пересечённой местности предполагает быструю езду на подъёмах, по равнине и вниз по склону. Горный велосипед уходит корнями в езду по пересечённой местности и гонки, и эта сфера по-прежнему очень популярна.",
+    text: "Езда по пересечённой местности (также часто называемая кросс-кантри и велосипедами для кросс-кантри) предполагает быструю езду везде, а не только вниз по склону. В отличие от эндуро или скоростного спуска, езда по пересечённой местности предполагает быструю езду на подъёмах, по равнине и вниз по склону. Горный велосипед уходит корнями в езду по пересечённой местности и гонки, и эта сфера по-прежнему очень популярна.",
     image:
       "https://bikes.com/cdn/shop/files/Web_Element_MRiga_ALN_RGauvin_BritishColumbia-3_c76b4a8a-80de-423c-9523-2f82ac032889.jpg?v=1649135431&width=832",
   },
@@ -209,24 +209,25 @@ const Enduro = () => {
         >
           {slides.map((slide, index) => (
             <SwiperSlide key={index}>
-              <div className="flex items-center gap-10">
+              <div className="flex items-center gap-10 bg-[#181314]">
                 <img
                   src={slide.image}
-                  className="rounded-xl w-[600px] h-[350px] object-cover"
+                  className="rounded-xl w-[200px] h-[350px] object-cover"
                 />
                 <div>
                   <h2 className="text-3xl ">{slide.title}</h2>
-                  <p className="mt-4 text-gray-300">{slide.text}</p>
-                  <a href="#" className="mt-4 inline-block text-blue-400">
-                    Узнать больше
-                  </a>
+                  <p className="mt-4 text-white">{slide.text}</p>
+        
+                  <span href="#" className="underline-animation cursor-pointer">
+                Узнать больше
+              </span>
                 </div>
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
 
-        <div className="flex items-center justify-center gap-6 mt-8">
+        <div className="flex items-center justify-center gap-5 mt-8">
           {slides.map((slide, index) => (
             <div
               key={index}
@@ -236,7 +237,7 @@ const Enduro = () => {
               onClick={() => handleDotClick(index)}
             >
               <div
-                className={`w-6 h-6 rounded-full border-2 ${
+                className={`w-5 h-5 rounded-full border-2 ${
                   activeIndex === index
                     ? "bg-white border-white"
                     : "border-gray-500"

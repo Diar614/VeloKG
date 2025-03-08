@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import Header from "../Header"; 
 
 const UserAccount = () => {
@@ -22,5 +22,6 @@ const UserAccount = () => {
     </div>
   );
 };
+
 
 export default UserAccount;
