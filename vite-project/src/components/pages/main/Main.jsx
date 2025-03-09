@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Header from "../Header";
 import SearchSidebar from "../SearchSidebar";
-import { useProduct } from "../product-slice.js/productd-slice"; 
+import { useProduct } from "../product-slice.js/productd-slice";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";
-import Speedometer from "../Speedometer";  
-
+import Speedometer from "../Speedometer";
+import "./styles.css";
 
 const faqData = [
   {
@@ -98,7 +98,7 @@ const Main = () => {
   });
 
   useEffect(() => {
-    getAllProduct(); 
+    getAllProduct();
 
     const handleScroll = () => {
       const image = document.querySelector("img.w-full.h-auto");
@@ -140,8 +140,7 @@ const Main = () => {
         style={{ "--background": "38 32 32", "--text-color": "229 229 229" }}
         className="bg-[rgb(var(--background))] text-[rgb(var(--text-color))] p-8 text-center"
       >
-
-        <div className="relative w-full h-[1000px]">
+        <div className="relative w-full h-auto pt-16 pb-32">
           <img
             className="w-full h-full object-cover"
             src={slides[currentSlide]}
@@ -162,7 +161,7 @@ const Main = () => {
 
           <div className="flex flex-col items-center">
             <h1 className="text-xl">
-              <Speedometer />  
+              <Speedometer />
             </h1>
           </div>
 
@@ -175,7 +174,9 @@ const Main = () => {
       <div className="bg-stone-50 min-h-screen p-6">
         <div
           ref={productRef}
-          className={`product-list grid grid-cols-2 gap-6 px-64 pt-52 ${productInView ? "opacity-100" : "opacity-0"}`}
+          className={`product-list grid grid-cols-2 gap-6 px-64 pt-52 ${
+            productInView ? "opacity-100" : "opacity-0"
+          }`}
           style={{ transition: "opacity 1s" }}
         >
           {products.map((product) => {
@@ -183,7 +184,7 @@ const Main = () => {
             if (!bike) return null;
             return Object.keys(bike).map((key, index) => (
               <Link
-                to={`/product/${product.id}`}  
+                to={`/product/${product.id}`}
                 key={`${product.id}-${key}`}
                 className="bg-white shadow-md rounded-md overflow-hidden mx-2"
               >
@@ -223,10 +224,14 @@ const Main = () => {
           })}
         </div>
 
-        <h2 className="text-3xl font-bold text-center mb-4 pt-20">Часто задаваемые вопросы</h2>
+        <h2 className="text-3xl font-bold text-center mb-4 pt-20">
+          Часто задаваемые вопросы
+        </h2>
         <div
           ref={faqRef}
-          className={`w-full h-full relative pt-10 pb-32 ${faqInView ? "opacity-100" : "opacity-0"}`}
+          className={`w-full h-full relative pt-10 pb-32 ${
+            faqInView ? "opacity-100" : "opacity-0"
+          }`}
           style={{ transition: "opacity 1s" }}
         >
           <div className="p-6 max-w-4xl mx-auto mt-10 bg-stone-100">
@@ -238,6 +243,68 @@ const Main = () => {
           </div>
         </div>
       </div>
+      <div className="bg-[#181314] text-white pb-12">
+  <h1 className="text-5xl pt-16 pb-12 pl-[30px]">Ищете что-то другое?</h1>
+  <div className="flex justify-center gap-10 items-center flex-wrap">
+    <div className="flex flex-col items-center max-w-[500px] mx-4">
+      <img
+        src="https://bikes.com/cdn/shop/files/Web_Instinct_MRiga_SSchultz_TobyCreekBC_MRP1442_edited.jpg?v=1711387112&width=500"
+        alt=""
+        className="w-full h-[300px] rounded-xl"
+      />
+      <h2 className="text-3xl pt-5 font-medium">Инстинкт</h2>
+      <p className="text-2xl pt-5">Полная универсальность трассы</p>
+      <p className="max-w-[200px] pt-5">
+        Если вы ищете велосипед, который делает все, то вам стоит обратить
+        внимание на Instinct. Мы разработали велосипед, который способен
+        справиться с техническими трассами, но при этом позволяет вам
+        сильно нажимать на педали на подъемах.
+      </p>
+      <span className="underline-animation cursor-pointer">
+        Узнать больше
+      </span>
+    </div>
+
+    <div className="flex flex-col items-center max-w-[500px] mx-4">
+      <img
+        src="https://bikes.com/cdn/shop/files/Print_InstinctPowerplay_WSimmons_MRiga_GoldenBC-19_1.jpg?v=1640043079&width=500"
+        alt=""
+        className="w-full h-[300px] rounded-xl"
+      />
+      <h2 className="text-3xl pt-5 font-medium">Powerplay</h2>
+      <p className="text-2xl pt-5 max-w-[300px]">
+        Полная универсальность маршрута, электрификация⚡️
+      </p>
+      <p className="max-w-[180px] pt-5">
+        Если вы хотите отправиться в горы или исследовать новые места,
+        Instinct Powerplay вдохновит вас на дальнейшие поиски и поиски
+        новых приключений.
+      </p>
+      <span className="underline-animation cursor-pointer">
+        Узнать больше
+      </span>
+    </div>
+
+    <div className="flex flex-col items-center max-w-[500px] mx-4">
+      <img
+        src="https://bikes.com/cdn/shop/files/Web_Altitude_MRiga_RGauvin_KamloopsBC_MRP1186_2.jpg?v=1711491319&width=500"
+        alt=""
+        className="w-full h-[300px] rounded-xl"
+      />
+      <h2 className="text-3xl pt-5 font-medium">Высота</h2>
+      <p className="text-2xl pt-5">Величие эндуро</p>
+      <p className="max-w-[200px] pt-5">
+        Гоночные трассы или воскресные гонки, Altitude вам подойдет.
+        Специально созданный и проверенный в гонках, это лучшее оружие
+        эндуро для уничтожения крутых трасс и ускорения каждой сессии.
+      </p>
+      <span className="underline-animation cursor-pointer">
+        Узнать больше
+      </span>
+    </div>
+  </div>
+</div>
+
     </div>
   );
 };

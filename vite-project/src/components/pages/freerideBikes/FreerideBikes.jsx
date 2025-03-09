@@ -9,6 +9,12 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ArrowRightIcon,
+} from "@heroicons/react/24/outline";
+import "./PaginationStyle.css";
 
 const faqData = [
   {
@@ -64,34 +70,33 @@ const FreerideBikes = () => {
   const slides = [
     {
       title: "Гравийные велосипеды",
-      text: "Гравийный велосипед — это красивый и необычный гибрид шоссейного велосипеда, велосипеда для приключений и велосипеда для циклокросса с лёгким намёком на горный велосипед.",
+      text: "Так много всего. Гравийный велосипед — это красивый и необычный гибрид шоссейного велосипеда, велосипеда для приключений и велосипеда для циклокросса с лёгким намёком на горный велосипед. С точки зрения геометрии и ощущений от езды гравийный велосипед очень похож на шоссейный.",
       image:
         "https://bikes.com/cdn/shop/files/Web_Solo_MRiga_RAnderson_Saskatchewan_MRP1153_e203e171-0fde-4271-9543-6654d172c44f.jpg?v=1679692674&width=832",
     },
     {
       title: "Толстокожие велосипеды",
-      text: "Лучшие велосипеды с толстыми шинами прочные, долговечные и имеют огромный дорожный просвет.",
+      text: "Лучшие велосипеды с толстыми шинами прочные, долговечные и имеют большой дорожный просвет. Если вы посмотрите на велосипед с толстыми шинами, то увидите, что он довольно простой. Обычно он жёсткий (то есть у него нет подвески), у него дисковые тормоза и толстые шины. Толстые шины играют ключевую роль (подробнее об этом ниже).",
       image:
         "https://bikes.com/cdn/shop/files/Web_BlizzardC90_MRiga_WSimmons_BritishColumbia-16_1.jpg?v=1698359080&width=832",
     },
     {
       title: "Велосипеды для кросс-кантри",
-      text: "Езда по пересечённой местности предполагает быструю езду на подъёмах, по равнине и вниз по склону.",
+      text: "Езда по пересеченной местности (также часто называемая XC riding и XC bikes) фокусируется на быстрой езде повсюду, а не только под гору. В отличие от эндуро или скоростного спуска, езда по пересеченной местности - это быстрая езда на подъемах, по равнинам и под гору. Катание на горных велосипедах уходит своими корнями в езду по пересеченной местности и гонки, и сегодня это направление по-прежнему очень популярно.",
       image:
         "https://bikes.com/cdn/shop/files/Web_Element_MRiga_ALN_RGauvin_BritishColumbia-3_c76b4a8a-80de-423c-9523-2f82ac032889.jpg?v=1649135431&width=832",
     },
     {
       title: "Велосипеды для трейла",
-      text: "Горный велосипед для трейла — это универсал. Он может подниматься, спускаться и ехать по узким извилистым однопутным дорогам.",
+      text: "Представьте, что трейл-байк — это универсал. Потому что хороший трейл-байк с полной подвеской может делать всё понемногу. Он может подниматься в гору, спускаться с неё, ездить по узким извилистым однопутным дорогам. Трейл-байки популярны, потому что они действительно универсальны.",
       image:
         "https://bikes.com/cdn/shop/files/Print_Instinct_MRiga_FBurke_MontTremblantQC-10_49cd488e-a314-4501-b4d6-4bff57977012.jpg?v=1673485036&width=832",
     },
     {
       title: "Велосипеды для эндуро",
-      text: "Эндуро-велосипеды популярны среди гонщиков, которые хотят спускаться по крутым трассам, но также подниматься в гору.",
+      text: "В то время как эндуро-маунтинбайк уходит корнями в гонки, эндуро-велосипеды являются популярным вариантом для гонщиков, которые хотят спускаться по крутым трассам, но при этом хотят иметь возможность эффективно подниматься в гору и преодолевать крутые участки.",
       image:
         "https://bikes.com/cdn/shop/files/DTP_9833.jpg?v=1663868402&width=832",
-     route: "/enduro"
     },
   ];
 
@@ -155,7 +160,7 @@ const FreerideBikes = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={sectionInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 1 }}
-        className="flex items-center justify-center text-center py-20"
+        className="flex items-center justify-center text-center py-20 px-[20%]"
       >
         <h1 className="text-6xl mb-6">Что такое фрирайд-байк?</h1>
         <p className="text-xl sm:text-lg md:text-xl leading-relaxed max-w-4xl mx-auto pt-5 pr-24">
@@ -172,6 +177,7 @@ const FreerideBikes = () => {
           сложным маршрутам.
         </p>
       </motion.div>
+
       <motion.div
         ref={faqRef}
         className={`w-full h-full relative pt-10 pb-32 ${
@@ -185,63 +191,71 @@ const FreerideBikes = () => {
           ))}
         </div>
       </motion.div>
+      <div className="bg-[#181314] text-white py-10 px-4 relative">
+        <h1 className="text-5xl pb-10 text-center font-bold">
+          Ищете что-то другое?
+        </h1>
 
-      <div className="bg-[#181314] text-white py-10 px-4">
-        <h1 className="text-5xl pt-15 pb-13">Ищете что-то другое?</h1>
+        <div className="prev-button absolute top-1/2 left-4 z-10 -translate-y-1/2 cursor-pointer p-2 rounded-full bg-black/30 hover:bg-black/50 transition">
+          <ChevronLeftIcon className="w-8 h-8" />
+        </div>
+        <div className="next-button absolute top-1/2 right-4 z-10 -translate-y-1/2 cursor-pointer p-2 rounded-full bg-black/30 hover:bg-black/50 transition">
+          <ChevronRightIcon className="w-8 h-8" />
+        </div>
+
         <Swiper
           modules={[Navigation, Pagination]}
-          spaceBetween={50}
+          spaceBetween={30}
           slidesPerView={1}
+          centeredSlides
+          loop
           onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
           navigation={{
             prevEl: ".prev-button",
             nextEl: ".next-button",
           }}
+          pagination={{
+            clickable: true,
+            renderBullet: (index, className) => {
+              return (
+                <div className={`${className} custom-pagination`}>
+                  <span className="pagination-title">
+                    {slides[index].title}
+                  </span>
+                </div>
+              );
+            },
+          }}
           ref={swiperRef}
+          className="!w-[55%] mx-auto !overflow-visible"
         >
           {slides.map((slide, index) => (
-            <SwiperSlide key={index}>
-              <div className="flex items-center gap-10">
+            <SwiperSlide key={index} className="!w-[80%] mx-auto">
+              <div className="relative group">
                 <img
                   src={slide.image}
-                  className="rounded-xl w-[600px] h-[350px] object-cover"
+                  className="rounded-xl w-full h-[300px] object-cover transform transition duration-500 group-hover:scale-105"
                 />
-                <div>
-                  <h2 className="text-3xl ">{slide.title}</h2>
-                  <p className="mt-4 text-gray-300">{slide.text}</p>
-                  <a href="#" className="mt-4 inline-block text-blue-400">
+                <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent">
+                  <h2 className="text-4xl font-bold mb-4">{slide.title}</h2>
+                  <p className="text-lg text-gray-200 max-w-[60%]">
+                    {slide.text}
+                  </p>
+                  <a
+                    href="#"
+                    className="mt-6 inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition"
+                  >
                     Узнать больше
+                    <ArrowRightIcon className="w-4 h-4" />
                   </a>
                 </div>
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
-
-        <div className="flex items-center justify-center gap-6 mt-8">
-          {slides.map((slide, index) => (
-            <div
-              key={index}
-              className={`flex flex-col items-center cursor-pointer ${
-                activeIndex === index ? "text-white" : "text-gray-500"
-              }`}
-              onClick={() => handleDotClick(index)}
-            >
-              <div
-                className={`w-6 h-6 rounded-full border-2 ${
-                  activeIndex === index
-                    ? "bg-white border-white"
-                    : "border-gray-500"
-                }`}
-              />
-              <span className="text-xs mt-2">{slide.title}</span>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );
 };
 
 export default FreerideBikes;
-
