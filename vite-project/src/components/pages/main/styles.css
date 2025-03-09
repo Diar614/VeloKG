@@ -156,3 +156,20 @@ body {
   color: rgb(var(--text-color)); 
 }
 
+.w-500px {
+  width: 100%; 
+}
+
+@media (max-width: 767px) {
+  .w-500px {
+    width: 100%;
+  }
+}
+
+.bg-custom-background {
+  background-color: rgb(var(--background)); 
+}
+
+.text-custom-text-color {
+  color: rgb(var(--text-color)); 
+}
