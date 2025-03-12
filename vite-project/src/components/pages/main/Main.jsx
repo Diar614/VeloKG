@@ -147,15 +147,19 @@ const Main = () => {
           <img
             className="w-full h-full object-cover"
             src={slides[currentSlide]}
+            alt="Main slide"
           />
         </div>
 
-        <h1 className="text-7xl pt-32 font-bold">Будь в своей Стихии.</h1>
-        <h1 className="max-w-3xl mx-auto mt-6 text-xl">
-          Модель Element, разработанная для достижения идеального баланса между
-          лёгкостью, эффективностью при беге по пересечённой местности и
-          технической точностью, — это лучшее из возможного.
-        </h1>
+        <div className="pt-90">
+          <h1 className="text-7xl font-bold">Будь в своей Стихии.</h1>
+          <h1 className="max-w-3xl mx-auto mt-6 text-xl">
+            Модель Element, разработанная для достижения идеального баланса
+            между лёгкостью, эффективностью при беге по пересечённой местности и
+            технической точностью, — это лучшее из возможного.
+          </h1>
+        </div>
+
         <div className="flex justify-center items-center space-x-40 text-4xl mt-10 pb-30 pt-10">
           <div className="flex flex-col items-center">
             <h1 className="text-5xl">Пересеченная местность</h1>
@@ -174,6 +178,7 @@ const Main = () => {
           </div>
         </div>
       </div>
+
       <div className="bg-stone-50 min-h-screen p-6">
         <div
           ref={productRef}
@@ -182,51 +187,47 @@ const Main = () => {
           }`}
           style={{ transition: "opacity 1s" }}
         >
-          {products.map((product) => {
-            const { bike, name, description } = product;
-            if (!bike) return null;
-            return Object.keys(bike).map((key, index) => (
-              <Link
-                to={`/product/${product.id}`}
-                key={`${product.id}-${key}`}
-                className="bg-white shadow-md rounded-md overflow-hidden mx-2"
-              >
-                <div className="relative">
-                  <span className="absolute top-1 left-1 bg-black text-white text-xs font-bold px-1 py-0.5 rounded">
-                    Новое
-                  </span>
-                  <img
-                    className="w-140 h-85 object-cover"
-                    src={bike[key]}
-                    alt={name?.[`${key}name`] || `Bike ${index + 1}`}
-                  />
-                </div>
-                <div className="p-4 bg-stone-200">
-                  <h1 className="text-sm font-bold">
-                    {name?.[`${key}name`] || `Bike ${index + 1}`}
-                  </h1>
-                  <p className="text-gray-600 text-2xs mx-auto">
-                    {description ||
-                      "Fox 34 Float Performance Elite, Fox Float Performance Elite, Sram Level Bronze Stealth 4 Piston, Sram GX Eagle Transmission Wireless"}
-                  </p>
-                  <div className="mt-2">
-                    <input
-                      type="checkbox"
-                      id={`compare-${product.id}-${key}`}
-                    />
-                    <label
-                      htmlFor={`compare-${product.id}-${key}`}
-                      className="ml-1 text-2xs"
-                    >
-                      + ДОБАВИТЬ ДЛЯ СРАВНЕНИЯ
-                    </label>
+    
+              {products.map((product) => {
+                const { bike, name, description } = product;
+                if (!bike) return null;
+                
+                return Object.keys(bike).map((key, index) => (
+                  <div key={`${product.id}-${key}`} className="bg-white shadow-md rounded-md overflow-hidden mx-2">
+                    <Link to={`/product/${product.id}`} className="relative">
+                      <span className="absolute top-1 left-1 bg-black text-white text-xs font-bold px-1 py-0.5 rounded">
+                        Новое
+                      </span>
+                      <img
+                        className="w-140 h-85 object-cover"
+                        src={bike[key] || 'https://default-image-url.jpg'}  
+                        alt={name?.[`${key}name`] }
+                      />
+                    </Link>
+                    <div className="p-4 bg-stone-200">
+                      <h1 className="text-sm font-bold">
+                        {name?.[`${key}name`] }
+                      </h1>
+               
+                      <div className="mt-2">
+                        <input
+                          type="checkbox"
+                          id={`compare-${product.id}-${key}`}
+                        />
+                        <label
+                          htmlFor={`compare-${product.id}-${key}`}
+                          className="ml-1 text-2xs"
+                        >
+                          + ДОБАВИТЬ ДЛЯ СРАВНЕНИЯ
+                        </label>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </Link>
-            ));
-          })}
+                ));
+              })}
+              
+ 
         </div>
-
         <h2 className="text-3xl font-bold text-center mb-4 pt-20">
           Часто задаваемые вопросы
         </h2>
@@ -246,7 +247,8 @@ const Main = () => {
           </div>
         </div>
       </div>
-      <div className="bg-[#181314] text-white pb-12">
+
+      <div className="bg-[#181314] text-white pb-12 px-[10%] ">
         <h1 className="text-5xl pt-16 pb-12 pl-[30px]">Ищете что-то другое?</h1>
         <div className="flex justify-center gap-10 items-center flex-wrap">
           <div className="flex flex-col items-center max-w-[500px] mx-4">
@@ -256,8 +258,30 @@ const Main = () => {
               className="w-full h-[300px] rounded-xl"
             />
             <h2 className="text-3xl pt-5 font-medium">Инстинкт</h2>
-            <p className="text-2xl pb-4 text-center">
-              Легенда среди велосипедов для жесткой местности
+            <p className="text-xl pb-4 text-center pt-10">
+              Полная универсальность маршрута
+            </p>
+            <p className="text-xl pb-4 text-center pt-5">
+              Если вы ищете универсальный велосипед, обратите внимание на
+              Instinct. Мы разработали велосипед, который подходит для езды по
+              сложным трассам, но при этом позволяет сильно давить на педали на
+              подъёмах.
+            </p>
+          </div>
+          <div className="flex flex-col items-center max-w-[500px] mx-4">
+            <img
+              src="https://bikes.com/cdn/shop/files/Print_InstinctPowerplay_WSimmons_MRiga_GoldenBC-19_1.jpg?v=1640043079&width=500"
+              alt=""
+              className="w-full h-[300px] rounded-xl"
+            />
+            <h2 className="text-3xl pt-5 font-medium">Игра Власти Инстинкта</h2>
+            <p className="text-xl pb-4 text-center pt-10">
+              Полная универсальность трассы, электрифицированная⚡
+            </p>
+            <p className="text-xl pb-4 text-center pt-5">
+              Если вы хотите отправиться в высокогорную местность или
+              исследовать новую зону, то Instinct Powerplay вдохновит вас на то,
+              чтобы пойти дальше и искать новые приключения.
             </p>
           </div>
           <div className="flex flex-col items-center max-w-[500px] mx-4">
@@ -266,8 +290,16 @@ const Main = () => {
               alt=""
               className="w-full h-[300px] rounded-xl"
             />
-            <h2 className="text-3xl pt-5 font-medium">Вопрос</h2>
-            <p className="text-2xl pb-4 text-center">Как выбрать велотранспорт?</p>
+            <h2 className="text-3xl pt-5 font-medium">
+              Высота над уровнем моря
+            </h2>
+            <p className="text-xl pb-4 text-center pt-10">Величие эндуро</p>
+            <p className="text-xl pb-4 text-center">
+              Будь то гоночные трассы или воскресные заезды, Altitude поможет
+              вам. Специально разработанный и проверенный в гонках, он является
+              идеальным инструментом для эндуро, позволяющим преодолевать крутые
+              трассы и ускорять каждую тренировку.
+            </p>
           </div>
         </div>
       </div>

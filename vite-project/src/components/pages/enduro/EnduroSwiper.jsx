@@ -11,7 +11,7 @@ const EnduroSwiper = ({ slides }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const handleCategoryClick = (index) => {
-    swiperRef.current.swiper.slideTo(index); // Переключение слайда по индексу
+    swiperRef.current.swiper.slideTo(index); 
   };
 
   return (

@@ -39,3 +39,4 @@ const HeaderSection = ({ isSearchVisible, setSearchVisible, isHeaderVisible }) =
 };
 
 export default HeaderSection;
+
