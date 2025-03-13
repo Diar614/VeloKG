@@ -2,15 +2,22 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { ChevronLeftIcon, ChevronRightIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ArrowRightIcon,
+} from "@heroicons/react/24/outline";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import Slider from "../gravelBike/Slider"
+import Slider from "../gravelBike/Slider";
+import SearchSidebar from "../SearchSidebar";
+import Header from "../Header";
 
 const faqData = [
   {
-    question: "Является ли велосипед для фрирайда лучшим велосипедом для катания в парках?",
+    question:
+      "Является ли велосипед для фрирайда лучшим велосипедом для катания в парках?",
     answer:
       "В зависимости от того, кого вы спросите, может быть! Если вы на 100% уверены, что будете кататься только в парке и никогда не будете подниматься в гору, купите горный велосипед для скоростного спуска. Но если вы хотите покорять сложные трассы в парке и за его пределами, велосипед для фрирайда может вам подойти.",
   },
@@ -23,34 +30,42 @@ const faqData = [
 
 const FreerideBikes = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isSearchVisible, setSearchVisible] = useState(false); 
   const swiperRef = useRef(null);
-  
+
   const slides = [
     {
       title: "Гравийные велосипеды",
-      image: "https://bikes.com/cdn/shop/files/Web_Solo_MRiga_RAnderson_Saskatchewan_MRP1153.jpg?v=1679692674&width=832",
+      image:
+        "https://bikes.com/cdn/shop/files/Web_Solo_MRiga_RAnderson_Saskatchewan_MRP1153.jpg?v=1679692674&width=832",
       link: "/gravelBike",
     },
     {
       title: "Толстокожие велосипеды",
-      image: "https://bikes.com/cdn/shop/files/Web_BlizzardC90_MRiga_WSimmons_BritishColumbia-16_1.jpg?v=1698359080&width=832",
+      image:
+        "https://bikes.com/cdn/shop/files/Web_BlizzardC90_MRiga_WSimmons_BritishColumbia-16_1.jpg?v=1698359080&width=832",
     },
     {
       title: "Велосипеды для кросс-кантри",
-      image: "https://bikes.com/cdn/shop/files/Web_Element_MRiga_ALN_RGauvin_BritishColumbia-3_c76b4a8a-80de-423c-9523-2f82ac032889.jpg?v=1649135431&width=832",
+      image:
+        "https://bikes.com/cdn/shop/files/Web_Element_MRiga_ALN_RGauvin_BritishColumbia-3_c76b4a8a-80de-423c-9523-2f82ac032889.jpg?v=1649135431&width=832",
     },
     {
       title: "Велосипеды для трейла",
-      image: "https://bikes.com/cdn/shop/files/Print_Instinct_MRiga_FBurke_MontTremblantQC-10_49cd488e-a314-4501-b4d6-4bff57977012.jpg?v=1673485036&width=832",
+      image:
+        "https://bikes.com/cdn/shop/files/Print_Instinct_MRiga_FBurke_MontTremblantQC-10_49cd488e-a314-4501-b4d6-4bff57977012.jpg?v=1673485036&width=832",
     },
     {
       title: "Велосипеды для эндуро",
-      image: "https://bikes.com/cdn/shop/files/DTP_9833.jpg?v=1663868402&width=832",
+      image:
+        "https://bikes.com/cdn/shop/files/DTP_9833.jpg?v=1663868402&width=832",
       link: "/enduro",
     },
   ];
 
-  const { ref: sectionRef, inView: sectionInView } = useInView({ threshold: 0.2 });
+  const { ref: sectionRef, inView: sectionInView } = useInView({
+    threshold: 0.2,
+  });
   const { ref: faqRef, inView: faqInView } = useInView({ threshold: 0.2 });
 
   const handleDotClick = (index) => {
@@ -67,13 +82,23 @@ const FreerideBikes = () => {
             "url('https://bikes.com/cdn/shop/files/Web_Slayer_MRiga_HZablotny_Utah_MRP2902_84edef5d-8a26-4b63-990d-f590ff762807.jpg?v=1686721464&width=2000')",
         }}
       >
+
+        <SearchSidebar
+          isSearchVisible={isSearchVisible}
+          setSearchVisible={setSearchVisible}
+        />
         <div className="relative z-10">
+       
+          <Header
+            isSearchVisible={isSearchVisible}
+            setSearchVisible={setSearchVisible}
+          />
           <h1 className="text-7xl sm:text-6xl md:text-7xl font-bold text-white text-center pt-20 sm:pt-40 lg:pt-60 px-4 sm:px-8 lg:px-16">
             Велосипеды для фрирайда
           </h1>
         </div>
       </div>
-      
+
       <motion.div
         ref={sectionRef}
         initial={{ opacity: 0, y: 50 }}
@@ -83,7 +108,15 @@ const FreerideBikes = () => {
       >
         <h1 className="text-6xl mb-6">Что такое фрирайд-байк?</h1>
         <p className="text-xl sm:text-lg md:text-xl leading-relaxed max-w-4xl mx-auto pt-5 pr-24">
-          Велосипед для фрирайда — это велосипед, сочетающий в себе элементы горных, трековых и эндуро велосипедов.
+          Велосипед для фрирайда — это велосипед, сочетающий в себе элементы
+          горных, трековых и эндуро-велосипедов. Для фрирайда обычно выбирают
+          велосипед с ходом 170 мм. Он больше и мощнее, чем эндуро-велосипед, но
+          немного меньше и легче, чем специализированный горный велосипед. Дело
+          в том, что велосипеды для фрирайда сконструированы так, чтобы быть
+          надёжными велосипедами для велопарков, но при этом быть более удобными
+          для езды, чем горные велосипеды. Возможно, вы не поставите рекорд по
+          подъёму на велосипеде для фрирайда, но вы сможете карабкаться вверх и
+          спускаться вниз.
         </p>
       </motion.div>
 

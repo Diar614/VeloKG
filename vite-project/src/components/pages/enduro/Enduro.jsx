@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../Header";
 import SearchSidebar from "../SearchSidebar";
 import { motion } from "framer-motion";
@@ -50,6 +50,9 @@ const slides = [
 ];
 
 const Enduro = () => {
+  // Добавляем состояние для видимости SearchSidebar
+  const [isSearchVisible, setSearchVisible] = useState(false);
+
   return (
     <div>
       <div
@@ -59,9 +62,16 @@ const Enduro = () => {
             "url('https://bikes.com/cdn/shop/files/Web_Altitude_MRiga_RGauvin_KamloopsBC_MRP1186.jpg?v=1711491319&width=2000')",
         }}
       >
-        <SearchSidebar />
+        {/* Передаем состояние видимости в SearchSidebar */}
+        <SearchSidebar
+          isSearchVisible={isSearchVisible}
+          setSearchVisible={setSearchVisible}
+        />
         <div className="relative z-10">
-          <Header />
+          <Header
+            isSearchVisible={isSearchVisible}
+            setSearchVisible={setSearchVisible}
+          />
         </div>
         <motion.div
           initial={{ opacity: 0, y: 50 }}

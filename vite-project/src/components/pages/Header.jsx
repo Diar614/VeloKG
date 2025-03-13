@@ -52,7 +52,7 @@ const Header = ({ isSearchVisible, setSearchVisible }) => {
           className="cursor-pointer transition-all duration-300"
           src={magnifier}
           onClick={() => setSearchVisible(!isSearchVisible)}
-          style={{ width: "20px", height: "25px" }}
+          style={{ width: "25px", height: "25px" }}
         />
         <img
           className="cursor-pointer transition-all duration-300"

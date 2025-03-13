@@ -15,17 +15,29 @@ const images = [
     route: "/E_bikes",
   },
   {
+    route: "/crossCountry",
     src: "https://bikes.com/cdn/shop/files/Web_Element_MRiga_AHestler_NorthVancouverBC_MRP4009_1.jpg?v=1724443951&width=800",
     title: "Пересеченная местность",
   },
   {
-    src: "https://bikes.com/cdn/shop/files/Web_Instinct_MRiga_SSchultz_TobyCreekBC_MRP1419.jpg?v=1724784331&width=800",
-    title: "Горные маршруты",
+    route: "/kidsBikes",
+    src: "https://bikes.com/cdn/shop/files/JSCHPxRocky_FlowBike_img8230_HR.webp?v=1709062812&width=800",
+    title: "Для детей",
   },
   {
     src: "https://bikes.com/cdn/shop/files/Web_Altitude_MRiga_RGauvin_KamloopsBC_MRP9972_1.jpg?v=1711491455&width=800",
     title: "Enduro",
         route: "/enduro"
+  },
+  {
+    src: "https://bikes.com/cdn/shop/files/SBP_00305.jpg?v=1718750770&width=800",
+    title: "Фрирайд",
+        route: "/freerideBike"
+  },
+  {
+    src: "https://bikes.com/cdn/shop/files/Web_Solo_MRiga_RAnderson_Saskatchewan_MRP1010.jpg?v=1679679734&width=800",
+    title: "Гравийные велосипеды",
+        route: "/gravelBike"
   },
 ];
 
@@ -95,20 +107,21 @@ const TheMain = () => {
           }}
         >
           {images.map((item, index) => (
-            <SwiperSlide key={index} className="relative">
-              <Link to={item.route}>
-                <div className="relative overflow-hidden group">
-                  <img
-                    src={item.src}
-                    alt={item.title}
-                    className="w-[900px] h-[480px] object-cover transition-transform duration-300 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 text-white text-3xl font-bold">
-                    <p className="text-center">{item.title}</p>
-                  </div>
-                </div>
-              </Link>
-            </SwiperSlide>
+            <SwiperSlide key={index} className="relative h-[480px]">
+  <Link to={item.route}>
+    <div className="relative overflow-hidden group h-full">
+      <img
+        src={item.src}
+        alt={item.title}
+        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+      />
+      <div className="absolute inset-0 flex justify-center items-center w-full h-full bg-black/30 text-white text-3xl font-bold">
+        <p>{item.title}</p>
+      </div>
+    </div>
+  </Link>
+</SwiperSlide>
+
           ))}
           <div className="swiper-button-prev"></div>
           <div className="swiper-button-next"></div>
