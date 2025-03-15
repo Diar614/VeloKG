@@ -30,13 +30,13 @@ const slides = [
   },
   {
     title: "Велосипеды для кросс-кантри",
-
+    link: "/crossCountry",
     image:
       "https://bikes.com/cdn/shop/files/Web_Element_MRiga_ALN_RGauvin_BritishColumbia-3_c76b4a8a-80de-423c-9523-2f82ac032889.jpg?v=1649135431&width=832",
   },
   {
     title: "Велосипеды для трейла",
-
+    link: "/trailBikes",
     image:
       "https://bikes.com/cdn/shop/files/Print_Instinct_MRiga_FBurke_MontTremblantQC-10_49cd488e-a314-4501-b4d6-4bff57977012.jpg?v=1673485036&width=832",
   },
@@ -50,7 +50,7 @@ const slides = [
 ];
 
 const Enduro = () => {
-  // Добавляем состояние для видимости SearchSidebar
+
   const [isSearchVisible, setSearchVisible] = useState(false);
 
   return (
@@ -62,7 +62,7 @@ const Enduro = () => {
             "url('https://bikes.com/cdn/shop/files/Web_Altitude_MRiga_RGauvin_KamloopsBC_MRP1186.jpg?v=1711491319&width=2000')",
         }}
       >
-        {/* Передаем состояние видимости в SearchSidebar */}
+
         <SearchSidebar
           isSearchVisible={isSearchVisible}
           setSearchVisible={setSearchVisible}
@@ -94,7 +94,7 @@ const Enduro = () => {
         <h1 className="text-6xl mb-3">
           Что такое катание на горных велосипедах эндуро?
         </h1>
-        <p className="text-xl sm:text-lg md:text-xl leading-relaxed max-w-4xl mx-auto">
+        <p className="text-xl sm:text-lg md:text-lg leading-relaxed max-w-4xl mx-auto">
           Эндуро-катание на горных велосипедах уходит корнями в гонки на эндуро.
           В гонках на эндуро гонщики соревнуются на определённых участках
           (обычно на спусках), но должны перемещаться между ними. Таким образом,
@@ -151,7 +151,7 @@ const Enduro = () => {
         <h1 className="text-6xl">
           Почему я должен выбрать горный велосипед enduro, а не трейловый?
         </h1>
-        <p className="text-xl sm:text-lg md:text-xl leading-relaxed max-w-4xl mx-auto pt-3">
+        <p className="text-lg sm:text-lg md:text-lg leading-relaxed max-w-4xl mx-auto pt-3">
           Если вам действительно не терпится как можно быстрее промчаться по
           крутым, труднопроходимым тропам, купите велосипед для эндуро. Вы
           по-прежнему сможете погонять с друзьями на

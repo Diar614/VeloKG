@@ -29,6 +29,7 @@ const KidsBikes = () => {
     },
     {
       title: "Велосипеды для кросс-кантри",
+      link: "/crossCountry",
       image:
         "https://bikes.com/cdn/shop/files/Web_Element_MRiga_ALN_RGauvin_BritishColumbia-3_c76b4a8a-80de-423c-9523-2f82ac032889.jpg?v=1649135431&width=832",
     },

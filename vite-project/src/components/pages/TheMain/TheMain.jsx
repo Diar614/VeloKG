@@ -83,7 +83,7 @@ const TheMain = () => {
           <div className="pt-15">
             <Link to="/main">
               <button className="bg-red-700 px-6 py-3 font-black rounded-lg cursor-pointer hover:opacity-70 transition-opacity duration-300">
-                Check it out
+                Проверьте ето
               </button>
             </Link>
           </div>

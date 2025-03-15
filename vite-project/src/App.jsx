@@ -9,6 +9,7 @@ import FreerideBike from "./components/pages/freerideBikes/FreerideBikes";
 import GravelBike from "./components/pages/gravelBike/GravelBike"
 import CrossCountry from "./components/pages/crossCountry/CrossCountry"
 import KidsBikes from "./components/pages/kidsBikes/KidsBikes"
+import TrailBikes from './components/pages/trailBikes/TrailBikes';
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/gravelBike" element={<GravelBike/>} />
         <Route path="/crossCountry" element={<CrossCountry/>} />
         <Route path="/kidsBikes" element={<KidsBikes/>} />
+        <Route path="/trailBikes" element={<TrailBikes/>} />
       </Routes>
     </Router>
   );

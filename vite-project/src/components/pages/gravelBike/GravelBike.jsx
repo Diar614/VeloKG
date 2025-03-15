@@ -70,11 +70,13 @@ const GravelBike = () => {
     },
     {
       title: "Велосипеды для кросс-кантри",
+      link: "/crossCountry",
       image:
         "https://bikes.com/cdn/shop/files/Web_Element_MRiga_ALN_RGauvin_BritishColumbia-3_c76b4a8a-80de-423c-9523-2f82ac032889.jpg?v=1649135431&width=832",
     },
     {
       title: "Велосипеды для трейла",
+      link: "/trailBikes",
       image:
         "https://bikes.com/cdn/shop/files/Print_Instinct_MRiga_FBurke_MontTremblantQC-10_49cd488e-a314-4501-b4d6-4bff57977012.jpg?v=1673485036&width=832",
     },
@@ -146,7 +148,7 @@ const GravelBike = () => {
         className="flex flex-col items-center justify-center text-center py-20 px-[15%]"
       >
         <h1 className="text-6xl">Что такое гравийный велосипед?</h1>
-        <p className="text-xl sm:text-lg md:text-xl leading-relaxed max-w-4xl mx-auto pt-5">
+        <p className="text-lg sm:text-lg md:text-lg leading-relaxed max-w-4xl mx-auto pt-5">
           Так много всего. Гравийный велосипед — это красивый и необычный гибрид
           шоссейного велосипеда, велосипеда для приключений и велосипеда для
           циклокросса с лёгким намёком на горный велосипед. В то время как у

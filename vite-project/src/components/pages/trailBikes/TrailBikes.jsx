@@ -28,9 +28,9 @@ const faqData = [
   },
 ];
 
-const FreerideBikes = () => {
+const TrailBikes = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isSearchVisible, setSearchVisible] = useState(false); 
+  const [isSearchVisible, setSearchVisible] = useState(false);
   const swiperRef = useRef(null);
 
   const slides = [
@@ -81,22 +81,20 @@ const FreerideBikes = () => {
         className="w-full h-[1200px] relative bg-cover bg-center"
         style={{
           backgroundImage:
-            "url('https://bikes.com/cdn/shop/files/Web_Slayer_MRiga_HZablotny_Utah_MRP2902_84edef5d-8a26-4b63-990d-f590ff762807.jpg?v=1686721464&width=2000')",
+            "url('https://bikes.com/cdn/shop/files/Print_Instinct_MRiga_FBurke_MontTremblantQC-6_f3b7aba1-2ecb-4319-9c28-cc4d37e3ad61.jpg?v=1678253054&width=2000')",
         }}
       >
-
         <SearchSidebar
           isSearchVisible={isSearchVisible}
           setSearchVisible={setSearchVisible}
         />
         <div className="relative z-10">
-       
           <Header
             isSearchVisible={isSearchVisible}
             setSearchVisible={setSearchVisible}
           />
-          <h1 className="text-7xl sm:text-6xl md:text-7xl font-bold text-white text-center pt-20 sm:pt-40 lg:pt-60 px-4 sm:px-8 lg:px-16">
-            Велосипеды для фрирайда
+          <h1 className="text-7xl sm:text-6xl md:text-7xl font-bold text-white text-center pt-100 sm:pt-100 lg:pt-100 px-4 sm:px-8 lg:px-16">
+            Трейловые велосипеды
           </h1>
         </div>
       </div>
@@ -106,25 +104,79 @@ const FreerideBikes = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={sectionInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 1 }}
-        className="flex items-center justify-center text-center py-20 px-[20%]"
+        className="flex flex-col items-center justify-center text-center py-20 px-[15%]"
       >
-        <h1 className="text-6xl mb-6">Что такое фрирайд-байк?</h1>
-        <p className="text-lg sm:text-lg md:text-lg leading-relaxed max-w-4xl mx-auto pt-5 pr-24">
-          Велосипед для фрирайда — это велосипед, сочетающий в себе элементы
-          горных, трековых и эндуро-велосипедов. Для фрирайда обычно выбирают
-          велосипед с ходом 170 мм. Он больше и мощнее, чем эндуро-велосипед, но
-          немного меньше и легче, чем специализированный горный велосипед. Дело
-          в том, что велосипеды для фрирайда сконструированы так, чтобы быть
-          надёжными велосипедами для велопарков, но при этом быть более удобными
-          для езды, чем горные велосипеды. Возможно, вы не поставите рекорд по
-          подъёму на велосипеде для фрирайда, но вы сможете карабкаться вверх и
-          спускаться вниз.
+        <h1 className="text-6xl">Что такое треловый велосипед?</h1>
+        <p className="text-xl sm:text-lg md:text-lg leading-relaxed max-w-4xl mx-auto pt-5">
+          Подумайте о горном велосипеде для трейла как о мастере на все руки.
+          Потому что хороший двухподвесный велосипед для трейла может делать
+          понемногу всего. Он может подниматься, спускаться, может проноситься
+          по узким, плавным синглтрекам. Трейловые велосипеды популярны, потому
+          что они действительно являются решением «делать все». Трейловый горный
+          велосипед находится между кросс-кантри и
+          <Link
+            to="/enduro"
+            className="transition underline-animation pl-2"
+          >
+            гонками/ездой на эндуро.
+          </Link>
+          Трейловые велосипеды не такие легкие, как кросс-кантри (поэтому
+          поднимаются немного хуже), но они могут справляться с неровной
+          местностью намного, намного лучше. Трейловый велосипед с полной
+          подвеской (и даже хардтейл) вообще предназначен для этого — если вы
+          ищете один велосипед, который справится со всем понемногу, выбирайте
+          трейловый велосипед.
         </p>
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+        className="pt-20 px-[15%]"
+      >
+        <h1 className="pl-40 text-5xl max-w-2xl">
+        Ознакомьтесь с нашими велосипедами для трейлового катания
+        </h1>
+        <div className="pt-10 flex justify-center">
+          <div className="relative mx-4 group">
+            <img
+              src="https://bikes.com/cdn/shop/collections/Web_MY21_Instinct_29_C90_C1_Hero_1.jpg?v=1709738106&width=500"
+              alt=""
+              className="w-[400px] h-[480px] transition-transform duration-500 ease-out transform group-hover:scale-105 cursor-pointer"
+            />
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-semibold">
+              Высота над уровнем моря
+            </div>
+          </div>
+          <div className="relative mx-4 group">
+            <img
+              src="https://bikes.com/cdn/shop/files/MRP3446-DB.jpg?v=1729555538&width=500"
+              alt=""
+              className="w-[400px] h-[480px] transition-transform duration-500 ease-out transform group-hover:scale-105 cursor-pointer"
+            />
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-semibold">
+            Инстинкт-powerplay-sl
+            </div>
+          </div>
+          <div className="relative mx-4 group">
+            <img
+              src="https://bikes.com/cdn/shop/collections/Web_InstinctPPAlloy17_MFredriksson_SextonItaly_2122.jpg?v=1635398434&width=500"
+              alt=""
+              className="w-[400px] h-[480px] transition-transform duration-500 ease-out transform group-hover:scale-105 cursor-pointer"
+            />
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-semibold">
+            Инстинкт-powerplay
+            </div>
+          </div>
+        </div>
       </motion.div>
 
       <motion.div
         ref={faqRef}
-        className={`w-full h-full relative pt-10 pb-32 ${faqInView ? "opacity-100" : "opacity-0"}`}
+        className={`w-full h-full relative pt-10 pb-32 ${
+          faqInView ? "opacity-100" : "opacity-0"
+        }`}
         style={{ transition: "opacity 1s" }}
       >
         <div className="p-6 max-w-4xl mx-auto mt-10 text-2xl">
@@ -167,4 +219,4 @@ const FreerideBikes = () => {
   );
 };
 
-export default FreerideBikes;
+export default TrailBikes;

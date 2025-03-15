@@ -143,13 +143,15 @@ const Main = () => {
         }}
         className="bg-[rgb(var(--background))] text-[rgb(var(--text-color))] p-8 text-center"
       >
-        <div className="relative w-full h-[1000px]">
-          <img
-            className="w-full h-full object-cover"
-            src={slides[currentSlide]}
-            alt="Main slide"
-          />
-        </div>
+<div className="relative w-full h-screen">
+  <img
+    className="w-full h-full object-cover"
+    src={slides[currentSlide]}
+    alt="Main slide"
+    style={{ objectFit: "cover" }} 
+  />
+</div>
+
 
         <div className="pt-90">
           <h1 className="text-7xl font-bold">Будь в своей Стихии.</h1>
@@ -187,46 +189,44 @@ const Main = () => {
           }`}
           style={{ transition: "opacity 1s" }}
         >
-    
-              {products.map((product) => {
-                const { bike, name, description } = product;
-                if (!bike) return null;
-                
-                return Object.keys(bike).map((key, index) => (
-                  <div key={`${product.id}-${key}`} className="bg-white shadow-md rounded-md overflow-hidden mx-2">
-                    <Link to={`/product/${product.id}`} className="relative">
-                      <span className="absolute top-1 left-1 bg-black text-white text-xs font-bold px-1 py-0.5 rounded">
-                        Новое
-                      </span>
-                      <img
-                        className="w-140 h-85 object-cover"
-                        src={bike[key] || 'https://default-image-url.jpg'}  
-                        alt={name?.[`${key}name`] }
-                      />
-                    </Link>
-                    <div className="p-4 bg-stone-200">
-                      <h1 className="text-sm font-bold">
-                        {name?.[`${key}name`] }
-                      </h1>
-               
-                      <div className="mt-2">
-                        <input
-                          type="checkbox"
-                          id={`compare-${product.id}-${key}`}
-                        />
-                        <label
-                          htmlFor={`compare-${product.id}-${key}`}
-                          className="ml-1 text-2xs"
-                        >
-                          + ДОБАВИТЬ ДЛЯ СРАВНЕНИЯ
-                        </label>
-                      </div>
-                    </div>
+          {products.map((product) => {
+            const { bike, name, description } = product;
+            if (!bike) return null;
+
+            return Object.keys(bike).map((key, index) => (
+              <div
+                key={`${product.id}-${key}`}
+                className="bg-white shadow-md rounded-md overflow-hidden mx-2"
+              >
+                <Link to={`/product/${product.id}`} className="relative">
+                  <span className="absolute top-1 left-1 bg-black text-white text-xs font-bold px-1 py-0.5 rounded">
+                    Новое
+                  </span>
+                  <img
+                    className="w-140 h-85 object-cover"
+                    src={bike[key] || "https://default-image-url.jpg"}
+                    alt={name?.[`${key}name`]}
+                  />
+                </Link>
+                <div className="p-4 bg-stone-200">
+                  <h1 className="text-sm font-bold">{name?.[`${key}name`]}</h1>
+
+                  <div className="mt-2">
+                    <input
+                      type="checkbox"
+                      id={`compare-${product.id}-${key}`}
+                    />
+                    <label
+                      htmlFor={`compare-${product.id}-${key}`}
+                      className="ml-1 text-2xs"
+                    >
+                      + ДОБАВИТЬ ДЛЯ СРАВНЕНИЯ
+                    </label>
                   </div>
-                ));
-              })}
-              
- 
+                </div>
+              </div>
+            ));
+          })}
         </div>
         <h2 className="text-3xl font-bold text-center mb-4 pt-20">
           Часто задаваемые вопросы

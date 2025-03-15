@@ -39,6 +39,7 @@ const CrossCountry = () => {
     },
     {
       title: "Велосипеды для трейла",
+      link: "/trailBikes",
       image:
         "https://bikes.com/cdn/shop/files/Print_Instinct_MRiga_FBurke_MontTremblantQC-10_49cd488e-a314-4501-b4d6-4bff57977012.jpg?v=1673485036&width=832",
     },
@@ -50,10 +51,7 @@ const CrossCountry = () => {
     },
   ];
 
-  const { ref: sectionRef, inView: sectionInView } = useInView({
-    threshold: 0.2,
-  });
-  const { ref: faqRef, inView: faqInView } = useInView({ threshold: 0.2 });
+
 
   const handleDotClick = (index) => {
     swiperRef.current.swiper.slideTo(index);
@@ -93,7 +91,7 @@ const CrossCountry = () => {
         <h1 className="text-6xl mb-3">
           Что такое езда по пересеченной местности?
         </h1>
-        <p className="text-xl sm:text-lg md:text-xl leading-relaxed max-w-4xl mx-auto">
+        <p className="text-lg sm:text-lg md:text-lg leading-relaxed max-w-4xl mx-auto">
           Езда по пересеченной местности (также часто называемая XC riding и XC
           bikes) фокусируется на быстрой езде повсюду, а не только под гору. В
           отличие от эндуро или скоростного спуска, езда по пересеченной
