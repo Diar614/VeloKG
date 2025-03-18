@@ -38,9 +38,21 @@ body {
 
 .swiper-slide img {
   display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 100%; 
+  height: 500px; 
+  object-fit: cover; 
+}
+
+@media (max-width: 1024px) {
+  .swiper-slide img {
+    height: 500px; 
+  }
+}
+
+@media (max-width: 767px) {
+  .swiper-slide img {
+    height: 500px; 
+  }
 }
 
 .underline-animation {
@@ -67,6 +79,7 @@ body {
   transform-origin: bottom right;
 }
 
+/* Adjusted .product-list styles with responsive padding */
 .product-list {
   display: grid;
   grid-template-columns: repeat(4, 1fr); 

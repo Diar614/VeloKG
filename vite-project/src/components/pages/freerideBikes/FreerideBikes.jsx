@@ -168,3 +168,9 @@ const FreerideBikes = () => {
 };
 
 export default FreerideBikes;
+
+
+
+
+
+

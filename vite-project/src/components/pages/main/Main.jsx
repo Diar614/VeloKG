@@ -81,11 +81,6 @@ const Main = () => {
   const { products, isFetch, getAllProduct } = useProduct();
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [isHeaderVisible, setHeaderVisible] = useState(true);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const slides = [
-    "https://bikes.com/cdn/shop/files/RM_2025_Website_CollectionHero_Element_Action_v2_1.jpg?v=1726247080&width=2000",
-    "https://bikes.com/cdn/shop/collections/Web_Element1_MRiga_BritishColumbia-06.jpg?v=1717782648&width=2000",
-  ];
 
   const { ref: faqRef, inView: faqInView } = useInView({
     triggerOnce: false,
@@ -109,12 +104,7 @@ const Main = () => {
 
     window.addEventListener("scroll", handleScroll);
 
-    const interval = setInterval(() => {
-      setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-    }, 10000);
-
     return () => {
-      clearInterval(interval);
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
@@ -136,6 +126,14 @@ const Main = () => {
           isHeaderVisible={isHeaderVisible}
         />
       </div>
+      <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
+  <img
+    className="w-full h-full object-cover absolute top-0 left-0"
+    src="https://bikes.com/cdn/shop/files/RM_2025_Website_CollectionHero_Element_Action_v2_1.jpg?v=1726247080&width=2000"
+
+  />
+</div>
+
       <div
         style={{
           "--background": "38 32 32",
@@ -143,17 +141,7 @@ const Main = () => {
         }}
         className="bg-[rgb(var(--background))] text-[rgb(var(--text-color))] p-8 text-center"
       >
-<div className="relative w-full h-screen">
-  <img
-    className="w-full h-full object-cover"
-    src={slides[currentSlide]}
-    alt="Main slide"
-    style={{ objectFit: "cover" }} 
-  />
-</div>
-
-
-        <div className="pt-90">
+        <div className="pt-20">
           <h1 className="text-7xl font-bold">Будь в своей Стихии.</h1>
           <h1 className="max-w-3xl mx-auto mt-6 text-xl">
             Модель Element, разработанная для достижения идеального баланса
@@ -204,12 +192,14 @@ const Main = () => {
                   </span>
                   <img
                     className="w-140 h-85 object-cover"
-                    src={bike[key] || "https://default-image-url.jpg"}
+                    src={bike[key] || 'https://default-image-url.jpg'}
                     alt={name?.[`${key}name`]}
                   />
                 </Link>
                 <div className="p-4 bg-stone-200">
-                  <h1 className="text-sm font-bold">{name?.[`${key}name`]}</h1>
+                  <h1 className="text-sm font-bold">
+                    {name?.[`${key}name`]}
+                  </h1>
 
                   <div className="mt-2">
                     <input
@@ -228,6 +218,7 @@ const Main = () => {
             ));
           })}
         </div>
+
         <h2 className="text-3xl font-bold text-center mb-4 pt-20">
           Часто задаваемые вопросы
         </h2>
@@ -308,3 +299,14 @@ const Main = () => {
 };
 
 export default Main;
+
+
+
+
+
+
+
+
+
+
+

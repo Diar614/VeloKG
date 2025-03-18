@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const SearchSidebar = ({ isSearchVisible, setSearchVisible }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+
   useEffect(() => {
     if (isSearchVisible) {
       document.body.style.overflow = "hidden";
@@ -12,6 +14,38 @@ const SearchSidebar = ({ isSearchVisible, setSearchVisible }) => {
       document.body.style.overflow = "";
     };
   }, [isSearchVisible]);
+
+  const links = [
+    { to: "/", label: "Главная" },
+    { to: "/E_bikes", label: "Электронные велосипеды" },
+    { to: "/enduro", label: "Ендуро велосипеды" },
+    { to: "/freerideBike", label: "Фрирайд велосипеды" },
+    { to: "/gravelBike", label: "Гравийные велосипеды" },
+    { to: "/crossCountry", label: "Велосипеды для кросс каунтри" },
+    { to: "/kidsBikes", label: "Детские велосипеды" },
+    { to: "/trailBikes", label: "Велосипеды для трейла" },
+    { to: "/", label: "Поддержка" }
+  ];
+
+  
+  const highlightText = (text, searchTerm) => {
+    if (!searchTerm) return text;
+
+    const regex = new RegExp(`(${searchTerm})`, "ig");
+    const parts = text.split(regex);
+
+    return parts.map((part, index) =>
+      part.toLowerCase() === searchTerm.toLowerCase() ? (
+        <span key={index} className="text-black">
+          {part}
+        </span>
+      ) : (
+        <span key={index} className="text-gray-500">
+          {part}
+        </span>
+      )
+    );
+  };
 
   return (
     <>
@@ -27,29 +61,33 @@ const SearchSidebar = ({ isSearchVisible, setSearchVisible }) => {
           isSearchVisible ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="p-5 flex  border-b relative pt-20">
+        <div className="p-5 flex border-b relative pt-20">
           <div className="absolute bottom-0 left-0 w-full px-5 pb-5">
             <input
               type="text"
               placeholder="Введите..."
-              className="w-full rounded border-0 focus:outline-none text-5xl"
+              className="w-full rounded border-0 focus:outline-none text-4xl"
               style={{
                 zIndex: 10,
                 position: "absolute",
                 bottom: "10px",
               }}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
         </div>
         <div className="text-2xl pt-9 pl-10 space-y-4 font-light cursor-pointer flex flex-col justify-start items-start">
-          <h1 className="transition underline-animation pl-2">Велосипеды</h1>
-          <Link to="/E_bikes" className="transition underline-animation pl-2">
-            Электронные велосипеды
-          </Link>
-          <h1 className="transition underline-animation pl-2">Запчасти</h1>
-          <Link to="/" className="transition underline-animation pl-2">
-           Поддержка
-          </Link>
+
+          {links
+            .filter((link) =>
+              link.label.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+            .map((link, index) => (
+              <Link key={index} to={link.to} className="transition underline-animation pl-2">
+                {highlightText(link.label, searchTerm)}
+              </Link>
+            ))}
         </div>
       </div>
     </>

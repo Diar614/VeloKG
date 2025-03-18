@@ -19,6 +19,37 @@ const faqData = [
       "Определённо! Ну, в пределах разумного. Гравийные велосипеды — это увлекательное испытание на извилистых однопутных трассах с ухабистыми участками, особенно если вы используете бескамерные шины (меньше вероятность проколов). Однако преодолевать сложные гравийные трассы или очень пересечённую местность — не лучшая идея. Гравийный велосипед определённо не выдержит езды по велопарку или участкам для эндуро, но он может выдержать и доставить массу удовольствия на более спокойных трассах для кросс-кантри. Поэтому при взвешивании гравий горный велосипед подумайте о том, что вам следует делать. Горный велосипед всегда позволит кататься по большему количеству маршрутов, чем гравийный. Так что если тропы вам дороги, выбирайте кросс-кантри, трейл или горный велосипед эндуро. Но если вам нравится идея эффективной езды по бездорожью, гравийным дорожкам, проселочным дорогам и необычным мягким трассам для горных велосипедов — выбирайте гравий.",
   },
 ];
+  const slides = [
+    {
+      title: "Гравийные велосипеды",
+      image:
+        "https://bikes.com/cdn/shop/files/Web_Solo_MRiga_RAnderson_Saskatchewan_MRP1153.jpg?v=1679692674&width=832",
+      link: "/gravelBike",
+    },
+    {
+      title: "Толстокожие велосипеды",
+      image:
+        "https://bikes.com/cdn/shop/files/Web_BlizzardC90_MRiga_WSimmons_BritishColumbia-16_1.jpg?v=1698359080&width=832",
+    },
+    {
+      title: "Велосипеды для кросс-кантри",
+      link: "/crossCountry",
+      image:
+        "https://bikes.com/cdn/shop/files/Web_Element_MRiga_ALN_RGauvin_BritishColumbia-3_c76b4a8a-80de-423c-9523-2f82ac032889.jpg?v=1649135431&width=832",
+    },
+    {
+      title: "Велосипеды для трейла",
+      link: "/trailBikes",
+      image:
+        "https://bikes.com/cdn/shop/files/Print_Instinct_MRiga_FBurke_MontTremblantQC-10_49cd488e-a314-4501-b4d6-4bff57977012.jpg?v=1673485036&width=832",
+    },
+    {
+      title: "Велосипеды для эндуро",
+      image:
+        "https://bikes.com/cdn/shop/files/DTP_9833.jpg?v=1663868402&width=832",
+      link: "/enduro",
+    },
+  ];
 
 const FAQItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -116,7 +147,7 @@ const GravelBike = () => {
   return (
     <div>
       <div
-        className="w-full h-[1200px] relative bg-cover bg-center"
+        className="w-full h-[1000px] relative bg-cover bg-center"
         style={{
           backgroundImage:
             "url('https://bikes.com/cdn/shop/files/Web_Solo_MRiga_RAnderson_Saskatchewan_MRP1153_e203e171-0fde-4271-9543-6654d172c44f.jpg?v=1679692674&width=2000')",
@@ -187,3 +218,10 @@ const GravelBike = () => {
 };
 
 export default GravelBike;
+
+
+
+
+
+
+
