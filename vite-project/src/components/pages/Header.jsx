@@ -57,7 +57,7 @@ const Header = ({ isSearchVisible, setSearchVisible }) => {
         <img
           className="cursor-pointer transition-all duration-300"
           src={user}
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/register")}
           style={{ width: "25px", height: "25px" }}
         />
         <img

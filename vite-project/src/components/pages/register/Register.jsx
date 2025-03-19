@@ -3,7 +3,6 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import jg1 from "../../../img/jg1.svg";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -17,7 +16,7 @@ const Register = () => {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/main");
+      navigate("/");
     } catch (err) {
       setError(err.message);
       console.error(err);
@@ -27,56 +26,64 @@ const Register = () => {
   return (
     <AnimatePresence>
       <motion.div
-        initial={{ x: "-100%", opacity: 0 }}
-        animate={{ x: "0%", opacity: 1 }}
-        exit={{ x: "100%", opacity: 0 }}
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 50 }}
         transition={{ duration: 0.5 }}
-        className="min-h-screen flex items-center justify-center bg-gray-50"
+        className="min-h-screen flex items-center justify-center bg-gray-100 px-4"
       >
-        <div className="flex flex-col md:flex-row items-center justify-center bg-white rounded-lg shadow-lg p-8 w-full md:w-[1000px] md:h-[700px]">
-          <div className="w-full md:w-1/2 flex justify-center">
-            <img
-              src={jg1}
-              alt="Illustration of cards"
-              className="w-[90%] md:w-auto h-auto max-w-[450px] object-contain"
-            />
-          </div>
+        <div className="bg-white rounded-2xl shadow-2xl p-16 w-full max-w-2xl flex flex-col items-center text-center mx-auto">
+          <h2 className="text-5xl font-bold mb-10 text-gray-800">
+            Регистрация
+          </h2>
 
-          <div className="w-full md:w-1/2">
-            <h2 className="text-3xl font-bold text-center mb-6 text-gray-700">Регистрация</h2>
-            {error && (
-              <div className="text-red-500 text-center mb-4">{error}</div>
-            )}
-            <form onSubmit={handleSubmit} className="flex flex-col gap-6 bg-gray-50">
-              <div className="form-group">
-                <label className="block text-gray-700 text-lg">Email:</label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  placeholder="Введите ваш email"
-                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                />
-              </div>
-              <div className="form-group">
-                <label className="block text-gray-700 text-lg">Пароль:</label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  placeholder="Введите ваш пароль"
-                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition ease-in-out"
+          {error && (
+            <div className="text-red-500 mb-6 text-lg">{error}</div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-8 w-full max-w-lg">
+            <div>
+              <label className="block text-gray-800 text-xl mb-2">Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                placeholder="Введите ваш email"
+                className="w-full p-5 border border-gray-400 rounded-xl text-xl focus:outline-none focus:ring-4 focus:ring-blue-400 text-center"
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-800 text-xl mb-2">Пароль</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                placeholder="Введите ваш пароль"
+                className="w-full p-5 border border-gray-400 rounded-xl text-xl focus:outline-none focus:ring-4 focus:ring-blue-400 text-center"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white py-3 rounded-xl text-xl font-semibold hover:bg-blue-600 transition ease-in-out"
+            >
+              Зарегистрироваться
+            </button>
+          </form>
+
+          <div className="mt-6">
+            <p className="text-lg text-gray-700">
+              У вас уже есть аккаунт?
+              <span
+                onClick={() => navigate("/login")}
+                className="text-blue-500 cursor-pointer hover:text-blue-600"
               >
-                Зарегистрироваться
-              </button>
-            </form>
+                Войти
+              </span>
+            </p>
           </div>
         </div>
       </motion.div>

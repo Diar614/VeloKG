@@ -218,10 +218,3 @@ const GravelBike = () => {
 };
 
 export default GravelBike;
-
-
-
-
-
-
-

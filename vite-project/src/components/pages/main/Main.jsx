@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebaseConfig";
+import { useInView } from "react-intersection-observer";
+import { motion } from "framer-motion";
 import Header from "../Header";
 import SearchSidebar from "../SearchSidebar";
-import { useProduct } from "../product-slice.js/productd-slice";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { Link } from "react-router-dom";
+import ProductCard from "./ProductCard";  
 import Speedometer from "../Speedometer";
 import "./styles.css";
+
 
 const faqData = [
   {
@@ -34,10 +36,6 @@ const faqData = [
   {
     question: "Каковы размеры удара?",
     answer: "Элемент совместим только с амортизаторами 190x45 мм.",
-  },
-  {
-    question: "Какой рекомендуемый ход вилки?",
-    answer: "Элемент предназначен для хода вилки от 120 до 140 мм",
   },
   {
     question: "Какой рекомендуемый ход вилки?",
@@ -78,7 +76,7 @@ const FAQItem = ({ question, answer }) => {
 };
 
 const Main = () => {
-  const { products, isFetch, getAllProduct } = useProduct();
+  const [products, setProducts] = useState([]);
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [isHeaderVisible, setHeaderVisible] = useState(true);
 
@@ -93,8 +91,21 @@ const Main = () => {
   });
 
   useEffect(() => {
-    getAllProduct();
 
+    const fetchProducts = async () => {
+      try {
+        const productsCol = collection(db, "products");
+        const productSnapshot = await getDocs(productsCol);
+        const productList = productSnapshot.docs.map(doc => doc.data());
+        setProducts(productList); 
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+
+    
     const handleScroll = () => {
       const image = document.querySelector("img.w-full.h-auto");
       if (!image) return;
@@ -109,115 +120,64 @@ const Main = () => {
     };
   }, []);
 
-  if (isFetch) {
-    return <h1 className="text-center text-2xl font-bold mt-10">Loading...</h1>;
-  }
-
   return (
-    <div className="w-full h-full relative">
-      <SearchSidebar
-        isSearchVisible={isSearchVisible}
-        setSearchVisible={setSearchVisible}
-      />
-      <div className="relative z-10">
-        <Header
+    <>
+      <div className="w-full h-full relative">
+        <SearchSidebar
           isSearchVisible={isSearchVisible}
           setSearchVisible={setSearchVisible}
-          isHeaderVisible={isHeaderVisible}
         />
-      </div>
-      <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
-  <img
-    className="w-full h-full object-cover absolute top-0 left-0"
-    src="https://bikes.com/cdn/shop/files/RM_2025_Website_CollectionHero_Element_Action_v2_1.jpg?v=1726247080&width=2000"
-
-  />
-</div>
-
-      <div
-        style={{
-          "--background": "38 32 32",
-          "--text-color": "229 229 229",
-        }}
-        className="bg-[rgb(var(--background))] text-[rgb(var(--text-color))] p-8 text-center"
-      >
-        <div className="pt-20">
-          <h1 className="text-7xl font-bold">Будь в своей Стихии.</h1>
-          <h1 className="max-w-3xl mx-auto mt-6 text-xl">
-            Модель Element, разработанная для достижения идеального баланса
-            между лёгкостью, эффективностью при беге по пересечённой местности и
-            технической точностью, — это лучшее из возможного.
-          </h1>
+        <div className="relative z-10">
+          <Header
+            isSearchVisible={isSearchVisible}
+            setSearchVisible={setSearchVisible}
+            isHeaderVisible={isHeaderVisible}
+          />
         </div>
 
-        <div className="flex justify-center items-center space-x-40 text-4xl mt-10 pb-30 pt-10">
-          <div className="flex flex-col items-center">
-            <h1 className="text-5xl">Пересеченная местность</h1>
-            <p className="text-3xl text-gray-400 mt-2">Предназначен для</p>
-          </div>
 
-          <div className="flex flex-col items-center">
-            <h1 className="text-xl">
-              <Speedometer />
+        <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
+          <img
+            className="w-full h-full object-cover absolute top-0 left-0"
+            src="https://bikes.com/cdn/shop/files/RM_2025_Website_CollectionHero_Element_Action_v2_1.jpg?v=1726247080&width=2000"
+            alt="Hero"
+          />
+        </div>
+
+    
+        <div className="bg-[rgb(var(--background))] text-[rgb(var(--text-color))] p-8 text-center">
+          <h1 className="text-7xl font-bold">Будь в своей Стихии.</h1>
+          <div className="pt-20">
+            <h1 className="text-7xl font-bold">Будь в своей Стихии.</h1>
+            <h1 className="max-w-3xl mx-auto mt-6 text-xl">
+              Модель Element, разработанная для достижения идеального баланса
+              между лёгкостью, эффективностью при беге по пересечённой местности и
+              технической точностью, — это лучшее из возможного.
             </h1>
           </div>
 
-          <div className="flex flex-col items-center">
-            <h1>29, 27.5</h1>
-            <p className="text-3xl text-gray-400 mt-2">Размер колеса</p>
+
+          <div className="flex justify-center items-center space-x-40 text-4xl mt-10 pb-30 pt-10">
+            <div className="flex flex-col items-center">
+              <h1 className="text-5xl">Пересеченная местность</h1>
+              <p className="text-3xl text-gray-400 mt-2">Предназначен для</p>
+            </div>
+
+            <div className="flex flex-col items-center">
+              <h1 className="text-xl">
+                <Speedometer />
+              </h1>
+            </div>
+
+            <div className="flex flex-col items-center">
+              <h1>29, 27.5</h1>
+              <p className="text-3xl text-gray-400 mt-2">Размер колеса</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="bg-stone-50 min-h-screen p-6">
-        <div
-          ref={productRef}
-          className={`product-list grid grid-cols-2 gap-6 px-64 pt-52 ${
-            productInView ? "opacity-100" : "opacity-0"
-          }`}
-          style={{ transition: "opacity 1s" }}
-        >
-          {products.map((product) => {
-            const { bike, name, description } = product;
-            if (!bike) return null;
 
-            return Object.keys(bike).map((key, index) => (
-              <div
-                key={`${product.id}-${key}`}
-                className="bg-white shadow-md rounded-md overflow-hidden mx-2"
-              >
-                <Link to={`/product/${product.id}`} className="relative">
-                  <span className="absolute top-1 left-1 bg-black text-white text-xs font-bold px-1 py-0.5 rounded">
-                    Новое
-                  </span>
-                  <img
-                    className="w-140 h-85 object-cover"
-                    src={bike[key] || 'https://default-image-url.jpg'}
-                    alt={name?.[`${key}name`]}
-                  />
-                </Link>
-                <div className="p-4 bg-stone-200">
-                  <h1 className="text-sm font-bold">
-                    {name?.[`${key}name`]}
-                  </h1>
 
-                  <div className="mt-2">
-                    <input
-                      type="checkbox"
-                      id={`compare-${product.id}-${key}`}
-                    />
-                    <label
-                      htmlFor={`compare-${product.id}-${key}`}
-                      className="ml-1 text-2xs"
-                    >
-                      + ДОБАВИТЬ ДЛЯ СРАВНЕНИЯ
-                    </label>
-                  </div>
-                </div>
-              </div>
-            ));
-          })}
-        </div>
 
         <h2 className="text-3xl font-bold text-center mb-4 pt-20">
           Часто задаваемые вопросы
@@ -237,9 +197,21 @@ const Main = () => {
             </h1>
           </div>
         </div>
-      </div>
-
-      <div className="bg-[#181314] text-white pb-12 px-[10%] ">
+        <div className="bg-stone-50 min-h-screen p-6">
+   
+          <div
+            ref={productRef}
+            className={`product-list grid grid-cols-2 gap-6 px-64 pt-52 ${
+              productInView ? "opacity-100" : "opacity-0"
+            }`}
+            style={{ transition: "opacity 1s" }}
+          >
+            {products.map((product, index) => (
+              <ProductCard key={index} product={product} index={index} />
+            ))}
+          </div>
+        </div>
+        <div className="bg-[#181314] text-white pb-12 px-[10%] ">
         <h1 className="text-5xl pt-16 pb-12 pl-[30px]">Ищете что-то другое?</h1>
         <div className="flex justify-center gap-10 items-center flex-wrap">
           <div className="flex flex-col items-center max-w-[500px] mx-4">
@@ -294,19 +266,9 @@ const Main = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 
 export default Main;
-
-
-
-
-
-
-
-
-
-
-

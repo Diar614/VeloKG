@@ -10,6 +10,7 @@ import GravelBike from "./components/pages/gravelBike/GravelBike"
 import CrossCountry from "./components/pages/crossCountry/CrossCountry"
 import KidsBikes from "./components/pages/kidsBikes/KidsBikes"
 import TrailBikes from './components/pages/trailBikes/TrailBikes';
+import Login from "./components/pages/login/Login" 
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/" element={<TheMain />} />
         <Route path="/main" element={<Main />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/userAccaunt" element={<UserAccaunt />} />
         <Route path="/E_bikes" element={<E_bikes />} />
         <Route path="/enduro" element={<Enduro />} />
