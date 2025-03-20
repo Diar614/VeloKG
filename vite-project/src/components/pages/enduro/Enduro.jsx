@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import Header from "../Header";
 import SearchSidebar from "../SearchSidebar";
@@ -56,33 +57,27 @@ const Enduro = () => {
   return (
     <div>
       <div
-        className="w-full h-[1100px] relative bg-cover bg-center"
+        className="w-full h-[1000px] relative bg-cover bg-center"
         style={{
           backgroundImage:
-            "url('https://bikes.com/cdn/shop/files/Web_Altitude_MRiga_RGauvin_KamloopsBC_MRP1186.jpg?v=1711491319&width=2000')",
+            "url('https://bikes.com/cdn/shop/files/Web_Altitude_MRiga_RGauvin_KamloopsBC_MRP1186_2.jpg?v=1711491319&width=2000')",
         }}
       >
-
-        <SearchSidebar
-          isSearchVisible={isSearchVisible}
-          setSearchVisible={setSearchVisible}
-        />
-        <div className="relative z-10">
-          <Header
-            isSearchVisible={isSearchVisible}
-            setSearchVisible={setSearchVisible}
-          />
-        </div>
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="absolute inset-0 flex justify-center items-center text-white sm:pt-40 lg:pt-60 px-4 sm:px-8 lg:px-16"
-        >
-          <h1 className="text-7xl sm:text-6xl md:text-7xl leading-tight text-center">
-            Велосипеды для эндуро
+<SearchSidebar
+isSearchVisible={isSearchVisible}
+setSearchVisible={setSearchVisible}
+/>
+<div className="relative z-10">
+<Header
+  isSearchVisible={isSearchVisible}
+  setSearchVisible={setSearchVisible}
+/>
+</div>
+        <div className="text-white text-center pt-20 sm:pt-40 lg:pt-60 px-4 sm:px-8 lg:px-16">
+          <h1 className="text-7xl sm:text-6xl md:text-7xl font-bold leading-tight pt-20">
+            Эндуро велосипед
           </h1>
-        </motion.div>
+        </div>
       </div>
 
       <motion.div
@@ -180,6 +175,7 @@ const Enduro = () => {
         <div className="next-button absolute top-1/2 right-4 z-10 -translate-y-1/2 cursor-pointer p-2 rounded-full bg-black/30 hover:bg-black/50 transition">
           <ChevronRightIcon className="w-8 h-8" />
         </div>
+        <div className="swiper-container overflow-x-hidden">
 
         <Swiper
           modules={[Navigation, Pagination]}
@@ -211,6 +207,7 @@ const Enduro = () => {
             </SwiperSlide>
           ))}
         </Swiper>
+        </div>
       </div>
     </div>
   );

@@ -2,11 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ArrowRightIcon,
-} from "@heroicons/react/24/outline";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -14,23 +9,9 @@ import Slider from "../gravelBike/Slider";
 import SearchSidebar from "../SearchSidebar";
 import Header from "../Header";
 
-const faqData = [
-  {
-    question:
-      "Является ли велосипед для фрирайда лучшим велосипедом для катания в парках?",
-    answer:
-      "В зависимости от того, кого вы спросите, может быть! Если вы на 100% уверены, что будете кататься только в парке и никогда не будете подниматься в гору, купите горный велосипед для скоростного спуска. Но если вы хотите покорять сложные трассы в парке и за его пределами, велосипед для фрирайда может вам подойти.",
-  },
-  {
-    question: "Могу ли я крутить педали велосипеда в начале тропы?",
-    answer:
-      "Да! Но медленно. Если зарядка до тропы и поднимается - это ваша игра, а фрирайд-велосипед не будет для вас. Но если вы с удовольствием выполняете упражнение “устойчиво на ходу” в гору, а затем хотите свести к нулю скоростной спуск, фрирайд-байк - хороший выбор.",
-  },
-];
-
 const FreerideBikes = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isSearchVisible, setSearchVisible] = useState(false); 
+  const [isSearchVisible, setSearchVisible] = useState(false);
   const swiperRef = useRef(null);
 
   const slides = [
@@ -78,38 +59,37 @@ const FreerideBikes = () => {
   return (
     <div>
       <div
-        className="w-full h-[1200px] relative bg-cover bg-center"
+        className="w-full h-[1000px] relative bg-cover bg-center"
         style={{
           backgroundImage:
             "url('https://bikes.com/cdn/shop/files/Web_Slayer_MRiga_HZablotny_Utah_MRP2902_84edef5d-8a26-4b63-990d-f590ff762807.jpg?v=1686721464&width=2000')",
         }}
       >
-
         <SearchSidebar
           isSearchVisible={isSearchVisible}
           setSearchVisible={setSearchVisible}
         />
         <div className="relative z-10">
-       
           <Header
             isSearchVisible={isSearchVisible}
             setSearchVisible={setSearchVisible}
           />
-          <h1 className="text-7xl sm:text-6xl md:text-7xl font-bold text-white text-center pt-20 sm:pt-40 lg:pt-60 px-4 sm:px-8 lg:px-16">
-            Велосипеды для фрирайда
-          </h1>
+
+          <div className="text-white text-center pt-20 sm:pt-40 lg:pt-60 px-4 sm:px-8 lg:px-16">
+            <h1 className="text-7xl sm:text-6xl md:text-7xl font-bold leading-tight pt-30">
+              Эндуро велосипед
+            </h1>
+          </div>
         </div>
       </div>
-
       <motion.div
-        ref={sectionRef}
         initial={{ opacity: 0, y: 50 }}
-        animate={sectionInView ? { opacity: 1, y: 0 } : {}}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
-        className="flex items-center justify-center text-center py-20 px-[20%]"
+        className="flex flex-col items-center justify-center text-center py-20 px-[15%]"
       >
-        <h1 className="text-6xl mb-6">Что такое фрирайд-байк?</h1>
-        <p className="text-lg sm:text-lg md:text-lg leading-relaxed max-w-4xl mx-auto pt-5 pr-24">
+        <h1 className="text-6xl mb-3">Что такое фрирайд-байк?</h1>
+        <p className="text-xl sm:text-lg md:text-lg leading-relaxed max-w-4xl mx-auto">
           Велосипед для фрирайда — это велосипед, сочетающий в себе элементы
           горных, трековых и эндуро-велосипедов. Для фрирайда обычно выбирают
           велосипед с ходом 170 мм. Он больше и мощнее, чем эндуро-велосипед, но
@@ -123,39 +103,42 @@ const FreerideBikes = () => {
       </motion.div>
 
       <motion.div
-        ref={faqRef}
-        className={`w-full h-full relative pt-10 pb-32 ${faqInView ? "opacity-100" : "opacity-0"}`}
-        style={{ transition: "opacity 1s" }}
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="flex flex-col items-center justify-center text-center py-20 px-[15%]"
       >
-        <div className="p-6 max-w-4xl mx-auto mt-10 text-2xl">
-          {faqData.map((item, index) => (
-            <div key={index} className="border-b border-gray-300 mb-5">
-              <button
-                className={`w-full text-left py-4 px-6 font-bold flex justify-between items-center`}
-                onClick={() => {}}
-              >
-                <span className="text-2xl">{item.question}</span>
-                <motion.span
-                  initial={{ rotate: 0 }}
-                  animate={{ rotate: 180 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  ▼
-                </motion.span>
-              </button>
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                transition={{ duration: 0.3 }}
-                className="overflow-hidden px-6"
-              >
-                <p className="pb-4 text-xl text-gray-700">{item.answer}</p>
-              </motion.div>
-            </div>
-          ))}
-        </div>
+        <h1 className="text-6xl mb-3">
+          Является ли велосипед для фрирайда лучшим велосипедом для катания в
+          парках?
+        </h1>
+        <p className="text-xl sm:text-lg md:text-lg leading-relaxed max-w-4xl mx-auto">
+          В зависимости от того, кого вы спросите, может быть! Если вы на 100%
+          уверены, что будете кататься только в парке и никогда не будете
+          подниматься в гору, купите горный велосипед для скоростного спуска. Но
+          если вы хотите покорять сложные трассы в парке и за его пределами,
+          велосипед для фрирайда может вам подойти.
+        </p>
       </motion.div>
-
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+        className="flex flex-col items-center text-center py-20 px-[15%]"
+      >
+        <h1 className="text-6xl">
+          Могу ли я крутить педали велосипеда в начале тропы?
+        </h1>
+        <p className="text-lg sm:text-lg md:text-lg leading-relaxed max-w-4xl mx-auto pt-3">
+          Да, вы можете крутить педали, но не слишком быстро. Если вам нужно
+          долго подниматься в гору или заряжать велосипед по сложным участкам,
+          то для таких целей фрирайд-байк может не подойти. Однако если вам
+          нравится кататься по разнообразным маршрутам, включая подъемы, а затем
+          резко спускаться с горы, фрирайд-велосипед будет отличным выбором.
+        </p>
+      </motion.div>
+      <div className="swiper-container overflow-x-hidden">
       <Slider
         slides={slides}
         activeIndex={activeIndex}
@@ -163,14 +146,9 @@ const FreerideBikes = () => {
         swiperRef={swiperRef}
         handleDotClick={handleDotClick}
       />
+          </div>
     </div>
   );
 };
 
 export default FreerideBikes;
-
-
-
-
-
-

@@ -148,7 +148,7 @@ const Main = () => {
         <div className="bg-[rgb(var(--background))] text-[rgb(var(--text-color))] p-8 text-center">
           <h1 className="text-7xl font-bold">Будь в своей Стихии.</h1>
           <div className="pt-20">
-            <h1 className="text-7xl font-bold">Будь в своей Стихии.</h1>
+
             <h1 className="max-w-3xl mx-auto mt-6 text-xl">
               Модель Element, разработанная для достижения идеального баланса
               между лёгкостью, эффективностью при беге по пересечённой местности и
@@ -199,17 +199,21 @@ const Main = () => {
         </div>
         <div className="bg-stone-50 min-h-screen p-6">
    
-          <div
-            ref={productRef}
-            className={`product-list grid grid-cols-2 gap-6 px-64 pt-52 ${
-              productInView ? "opacity-100" : "opacity-0"
-            }`}
-            style={{ transition: "opacity 1s" }}
-          >
-            {products.map((product, index) => (
-              <ProductCard key={index} product={product} index={index} />
-            ))}
-          </div>
+        <div
+  ref={productRef}
+  className={`product-list grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 px-4 sm:px-8 md:px-16 pt-52 ${productInView ? "opacity-100" : "opacity-0"}`}
+  style={{ transition: "opacity 1s" }}
+>
+  {products.map((product, index) => (
+    <div key={index} className="w-full">
+      <ProductCard product={product} index={index} />
+    </div>
+  ))}
+</div>
+
+
+
+
         </div>
         <div className="bg-[#181314] text-white pb-12 px-[10%] ">
         <h1 className="text-5xl pt-16 pb-12 pl-[30px]">Ищете что-то другое?</h1>

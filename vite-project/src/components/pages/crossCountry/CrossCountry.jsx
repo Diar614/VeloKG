@@ -76,7 +76,7 @@ const CrossCountry = () => {
             isSearchVisible={isSearchVisible}
             setSearchVisible={setSearchVisible}
           />
-          <h1 className="text-9xlxl sm:text-6xl md:text-7xl font-light text-white text-center pt-20 sm:pt-40 lg:pt-60 px-4 sm:px-8 lg:px-16 ">
+          <h1 className="text-9xlxl sm:text-6xl md:text-7xl font-light text-white text-center pt-90 sm:pt-90 lg:pt-90 px-4 sm:px-8 lg:px-16 ">
             Велосипеды для эзды по пересеченной местности| XC
           </h1>
         </div>
@@ -165,7 +165,7 @@ const CrossCountry = () => {
         </p>
       </motion.div>
 
-    
+      <div className="swiper-container overflow-x-hidden">
       <Slider
         slides={slides}
         activeIndex={activeIndex}
@@ -173,6 +173,7 @@ const CrossCountry = () => {
         swiperRef={swiperRef}
         handleDotClick={handleDotClick}
       />
+    </div>
     </div>
   );
 };

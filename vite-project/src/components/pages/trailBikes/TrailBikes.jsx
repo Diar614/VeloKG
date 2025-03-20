@@ -207,7 +207,7 @@ const TrailBikes = () => {
           ))}
         </div>
       </motion.div>
-
+      <div className="swiper-container overflow-x-hidden">
       <Slider
         slides={slides}
         activeIndex={activeIndex}
@@ -215,6 +215,7 @@ const TrailBikes = () => {
         swiperRef={swiperRef}
         handleDotClick={handleDotClick}
       />
+    </div>
     </div>
   );
 };

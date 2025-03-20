@@ -40,12 +40,7 @@ const Header = ({ isSearchVisible, setSearchVisible }) => {
         isScrolled ? "bg-opacity-80 shadow-md" : "bg-transparent"
       } ${isHidden ? "transform translate-y-[-100%]" : ""}`} 
     >
-      <nav className="flex items-center space-x-8 text-lg font-black pl-40 text-white">
-        <p>TRADE IN</p>
-        <p>Велосипеды</p>
-        <p>Запчасти</p>
-        <p>Екипировка</p>
-      </nav>
+
 
       <div className="absolute top-1/2 left-350 transform -translate-x-[30%] -translate-y-1/2 flex items-center space-x-6">
         <img

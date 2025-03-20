@@ -165,7 +165,7 @@ const GravelBike = () => {
           />
         </div>
         <div className="text-white text-center pt-20 sm:pt-40 lg:pt-60 px-4 sm:px-8 lg:px-16">
-          <h1 className="text-7xl sm:text-6xl md:text-7xl font-bold leading-tight pt-5">
+          <h1 className="text-7xl sm:text-6xl md:text-7xl font-bold leading-tight pt-20">
             Гравийный велосипед
           </h1>
         </div>
@@ -205,7 +205,7 @@ const GravelBike = () => {
           ))}
         </div>
       </motion.div>
-
+      <div className="swiper-container overflow-x-hidden">
       <Slider
         slides={slides}
         activeIndex={activeIndex}
@@ -213,6 +213,7 @@ const GravelBike = () => {
         swiperRef={swiperRef}
         handleDotClick={handleDotClick}
       />
+       </div>
     </div>
   );
 };
