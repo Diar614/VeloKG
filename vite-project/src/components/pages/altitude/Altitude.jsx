@@ -5,9 +5,9 @@ import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
 import Header from "../Header";
 import SearchSidebar from "../SearchSidebar";
-import ProductCard from "./ProductCard";  
+  
 import Speedometer from "../Speedometer";
-import "./styles.css";
+import "./AltitudeStyles.css";
 
 
 const faqData = [
@@ -75,7 +75,7 @@ const FAQItem = ({ question, answer }) => {
   );
 };
 
-const Main = () => {
+const Altitude = () => {
   const [products, setProducts] = useState([]);
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [isHeaderVisible, setHeaderVisible] = useState(true);
@@ -85,10 +85,6 @@ const Main = () => {
     threshold: 0.2,
   });
 
-  const { ref: productRef, inView: productInView } = useInView({
-    triggerOnce: false,
-    threshold: 0.2,
-  });
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -136,8 +132,8 @@ const Main = () => {
         <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
           <img
             className="w-full h-full object-cover absolute top-0 left-0"
-            src="https://bikes.com/cdn/shop/files/RM_2025_Website_CollectionHero_Element_Action_v2_1.jpg?v=1726247080&width=2000"
-            alt="Hero"
+            src="https://bikes.com/cdn/shop/files/RM_2024_Website_CollectionHero_Altitude_Rubik.png?v=1738937081&width=1400"
+         
           />
         </div>
         <div className="bg-[rgb(var(--background))] text-[rgb(var(--text-color))] p-8 text-center">
@@ -169,13 +165,7 @@ const Main = () => {
     </div>
   </div>
 </div>
-<div className="bg-stone-50 min-h-screen p-6">
-          <div className="product-list">
-            {products.map((product, index) => (
-              <ProductCard key={index} product={product} index={index} />
-            ))}
-          </div>
-        </div>
+
 
         <h2 className="text-3xl font-bold text-center mb-4 pt-20">
           Часто задаваемые вопросы
@@ -256,4 +246,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default Altitude;

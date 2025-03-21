@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
@@ -8,11 +8,26 @@ import "swiper/css/pagination";
 import Slider from "../gravelBike/Slider";
 import SearchSidebar from "../SearchSidebar";
 import Header from "../Header";
+import { db, collection, getDocs } from "../../firebaseConfig";
+import FreerideProductBike from "./FreerideProductBike";
+import "../gravelBike/GravelProductBike.css"
 
 const FreerideBikes = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isSearchVisible, setSearchVisible] = useState(false);
+  const [products, setProducts] = useState([]);
   const swiperRef = useRef(null);
+  const [cart, setCart] = useState([]); 
+
+  const handleAddToCart = (item) => {
+    setCart((prevCart) => {
+      const isItemInCart = prevCart.some((cartItem) => cartItem.id === item.id);
+      if (isItemInCart) {
+        return prevCart; 
+      }
+      return [...prevCart, item]; 
+    });
+  };
 
   const slides = [
     {
@@ -46,10 +61,15 @@ const FreerideBikes = () => {
     },
   ];
 
-  const { ref: sectionRef, inView: sectionInView } = useInView({
-    threshold: 0.2,
-  });
-  const { ref: faqRef, inView: faqInView } = useInView({ threshold: 0.2 });
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const querySnapshot = await getDocs(collection(db, "products"));
+      const productsList = querySnapshot.docs.map((doc) => doc.data());
+      setProducts(productsList);
+    };
+
+    fetchProducts();
+  }, []);
 
   const handleDotClick = (index) => {
     swiperRef.current.swiper.slideTo(index);
@@ -77,11 +97,12 @@ const FreerideBikes = () => {
 
           <div className="text-white text-center pt-20 sm:pt-40 lg:pt-60 px-4 sm:px-8 lg:px-16">
             <h1 className="text-7xl sm:text-6xl md:text-7xl font-bold leading-tight pt-30">
-              Эндуро велосипед
+              Фрирайд велосипед
             </h1>
           </div>
         </div>
       </div>
+
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -102,6 +123,18 @@ const FreerideBikes = () => {
         </p>
       </motion.div>
 
+      <div className="w-full h-full relative pt-10 pb-32">
+        <div className="product-list">
+          {products.map((product, index) => (
+            <FreerideProductBike
+              key={index}
+              product={product}
+              onAddToCart={handleAddToCart} 
+            />
+          ))}
+        </div>
+      </div>
+
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -115,11 +148,19 @@ const FreerideBikes = () => {
         <p className="text-xl sm:text-lg md:text-lg leading-relaxed max-w-4xl mx-auto">
           В зависимости от того, кого вы спросите, может быть! Если вы на 100%
           уверены, что будете кататься только в парке и никогда не будете
-          подниматься в гору, купите горный велосипед для скоростного спуска. Но
-          если вы хотите покорять сложные трассы в парке и за его пределами,
-          велосипед для фрирайда может вам подойти.
+          подниматься в гору, то вам нужен горный велосипед для скоростного
+          спуска. Но если вы хотите покорять парк и ездить по трассам за
+          пределами парка, то вам может подойти велосипед для фрирайда.
+          Преимущество велосипедов для фрирайда в том, что некоторые из них (но
+          не все) совместимы с двойной вилкой. Это означает, что вы можете
+          оснастить его массивной вилкой, чтобы преодолевать сложные участки в
+          парке, и в значительной степени приблизиться к статусу даунхилл-байка.
+          Кроме того, в последние годы велосипеды для фрирайда стали настолько
+          хороши, что многие райдеры скажут вам, что специализированный
+          даунхилл-байк больше не нужен.
         </p>
       </motion.div>
+
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -131,22 +172,23 @@ const FreerideBikes = () => {
           Могу ли я крутить педали велосипеда в начале тропы?
         </h1>
         <p className="text-lg sm:text-lg md:text-lg leading-relaxed max-w-4xl mx-auto pt-3">
-          Да, вы можете крутить педали, но не слишком быстро. Если вам нужно
-          долго подниматься в гору или заряжать велосипед по сложным участкам,
-          то для таких целей фрирайд-байк может не подойти. Однако если вам
-          нравится кататься по разнообразным маршрутам, включая подъемы, а затем
-          резко спускаться с горы, фрирайд-велосипед будет отличным выбором.
+          Да! Но медленно. Если вам нравится преодолевать подъёмы и спуски, то
+          велосипед для фрирайда вам не подойдёт (вместо него выберите велосипед
+          для трейла или велосипед для кросс-кантри). Но если вы готовы ехать
+          «как получится» в гору, а потом хотите разогнаться на спуске, то
+          велосипед для фрирайда — хороший выбор.
         </p>
       </motion.div>
+
       <div className="swiper-container overflow-x-hidden">
-      <Slider
-        slides={slides}
-        activeIndex={activeIndex}
-        setActiveIndex={setActiveIndex}
-        swiperRef={swiperRef}
-        handleDotClick={handleDotClick}
-      />
-          </div>
+        <Slider
+          slides={slides}
+          activeIndex={activeIndex}
+          setActiveIndex={setActiveIndex}
+          swiperRef={swiperRef}
+          handleDotClick={handleDotClick}
+        />
+      </div>
     </div>
   );
 };

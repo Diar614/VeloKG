@@ -44,7 +44,7 @@ const Slider = ({
           <div className="relative group">
             <img
               src={slide.image}
-              className="rounded-xl w-full h-[300px] object-cover transform transition duration-500 group-hover:scale-105"
+              className="rounded-xl w-full h-[500px] object-cover transform transition duration-500 group-hover:scale-105"
               alt={slide.title}
             />
             <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent">

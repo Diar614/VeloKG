@@ -1,52 +1,63 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useProduct } from "../product-slice.js/productd-slice";  
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { db } from "../../firebaseConfig";
+import { doc, getDoc } from "firebase/firestore";
 
 const ProductDetail = () => {
-  const { productId } = useParams(); 
-  const { products, isFetch, getAllProduct } = useProduct();
-  const [productDetails, setProductDetails] = useState(null);
+  const { id } = useParams(); // Извлекаем id из URL
+  console.log("Получено id из параметров URL:", id); // Лог для проверки
+
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    console.log(`Полученный productId: ${productId}`); 
-    console.log("Продукты:", products); 
-
-    if (products.length === 0) {
-      getAllProduct();
+    if (!id) {
+      setError("Продукт с таким ID не существует");
+      setLoading(false);
+      return;
     }
 
-    const product = products.find(item => item.id === productId);
-    
-    if (!product) {
-      console.log(`Товар с id ${productId} не найден`); 
-    }
+    const loadProduct = async () => {
+      try {
+        const productRef = doc(db, "products", id);
+        const productSnap = await getDoc(productRef);
 
-    setProductDetails(product);
-  }, [productId, products, getAllProduct]);
+        if (productSnap.exists()) {
+          setProduct(productSnap.data());
+        } else {
+          setError("Продукт с таким ID не существует");
+        }
+      } catch (err) {
+        setError("Ошибка при загрузке продукта");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  if (isFetch) {
-    return <h1 className="text-center text-2xl font-bold mt-10">Loading...</h1>;
+    loadProduct();
+  }, [id]);
+
+  if (loading) {
+    return <div>Загрузка...</div>;
   }
 
-  if (!productDetails) {
-    return <h1 className="text-center text-2xl font-bold mt-10">Товар не найден</h1>;
+  if (error) {
+    return <div>{error}</div>;
   }
-
-  const { bike, name, description } = productDetails;
 
   return (
-    <div className="product-detail">
-      <h1 className="text-3xl font-bold text-center">Подробное описание товара</h1>
-      <div className="max-w-4xl mx-auto mt-10">
-        <img
-          className="w-full h-auto object-cover"
-          src={bike ? bike[Object.keys(bike)[0]] : ''}
-          alt={name ? name : "Product Image"}
-        />
-        <h2 className="text-2xl font-semibold mt-4">{name}</h2>
-        <p className="text-lg mt-2">{description}</p>
-   
-      </div>
+    <div>
+      <h1>Детали продукта</h1>
+      {product ? (
+        <div>
+          <h2>{product.name}</h2>
+          <p>{product.description}</p>
+          <p>Цена: {product.price} сом</p>
+        </div>
+      ) : (
+        <div>Продукт не найден</div>
+      )}
     </div>
   );
 };

@@ -1,0 +1,116 @@
+.product-card-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px;
+    padding: 20px; 
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .product-card {
+    background-color: white;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); 
+    border-radius: 20px; 
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column; 
+    position: relative;
+  }
+  
+  .product-card .new-badge {
+    position: absolute;
+    top: 16px; 
+    left: 16px;
+    background-color: black;
+    color: white;
+    font-size: 0.875rem; 
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 8px;
+    opacity: 0;
+    transform: scale(0.8);  
+    transition: opacity 0.3s ease, transform 0.3s ease; 
+  }
+  
+  .product-card:hover .new-badge {
+    opacity: 1; 
+    transform: scale(1.2); 
+  }
+  
+  .product-card img {
+    width: 100%;
+    height: auto;
+    object-fit: contain; 
+  }
+  
+  .product-card .details {
+    padding: 20px; 
+    background-color: #f4f4f4;
+    flex-grow: 1; 
+  }
+  
+  .product-card .details h2 {
+    font-size: 1.5rem; 
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .product-card .details p {
+    font-size: 1rem; 
+    color: #555;
+  }
+  
+  .product-card:hover {
+    transform: scale(1.02); 
+  }
+  
+  @media (max-width: 1024px) {
+    .product-card-container {
+      grid-template-columns: repeat(2, 1fr); 
+      padding: 15px; 
+    }
+  
+    .product-card {
+      width: 100%; 
+    }
+  
+    .product-card img {
+      height: auto; 
+    }
+  
+    .product-card .details h2 {
+      font-size: 1.25rem; 
+    }
+  
+    .product-card .details p {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .product-card-container {
+      grid-template-columns: 1fr;
+      padding: 10px; 
+    }
+  
+    .product-card {
+      width: 100%;
+    }
+  
+    .product-card img {
+      height: auto; 
+    }
+  
+    .product-card .details h2 {
+      font-size: 1.1rem; 
+    }
+  
+    .product-card .details p {
+      font-size: 0.85rem;
+    }
+  }
+  .product-list {
+    padding-left: 15%;
+    padding-right: 15%;
+  }

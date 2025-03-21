@@ -1,12 +1,10 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Header from "../Header";
 import SearchSidebar from "../SearchSidebar";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import "swiper/swiper-bundle.css"; 
 
 const images = [
   {
@@ -27,17 +25,17 @@ const images = [
   {
     src: "https://bikes.com/cdn/shop/files/Web_Altitude_MRiga_RGauvin_KamloopsBC_MRP9972_1.jpg?v=1711491455&width=800",
     title: "Enduro",
-        route: "/enduro"
+    route: "/enduro",
   },
   {
     src: "https://bikes.com/cdn/shop/files/SBP_00305.jpg?v=1718750770&width=800",
     title: "Фрирайд",
-        route: "/freerideBike"
+    route: "/freerideBike",
   },
   {
     src: "https://bikes.com/cdn/shop/files/Web_Solo_MRiga_RAnderson_Saskatchewan_MRP1010.jpg?v=1679679734&width=800",
     title: "Гравийные велосипеды",
-        route: "/gravelBike"
+    route: "/gravelBike",
   },
 ];
 
@@ -83,14 +81,15 @@ const TheMain = () => {
           <div className="pt-15">
             <Link to="/main">
               <button className="bg-red-700 px-6 py-3 font-black rounded-lg cursor-pointer hover:opacity-70 transition-opacity duration-300">
-                Проверьте ето
+                Проверьте это
               </button>
             </Link>
           </div>
         </div>
       </div>
 
-      <div className="w-[1700px] mx-auto mt-10 pl-12 pb-14 pt-14 cursor-pointer">
+
+      <div className="swiper-container w-[90%] mx-auto mt-10 pl-12 pb-14 pt-14 cursor-pointer">
         <Swiper
           modules={[Navigation, Pagination]}
           spaceBetween={20}
@@ -99,34 +98,46 @@ const TheMain = () => {
             prevEl: '.swiper-button-prev',
             nextEl: '.swiper-button-next',
           }}
-          pagination={{ clickable: false }}
+          pagination={{
+            el: '.swiper-pagination',
+            clickable: true,
+            type: 'bullets',
+            renderBullet: (index, className) => {
+              return `<span class="${className} w-10 h-[2px] bg-white/50 transition-all duration-300"></span>`;
+            },
+          }}
           loop={false}
+          speed={500}
           breakpoints={{
-            640: { slidesPerView: 1 },
+            320: { slidesPerView: 1 },
+            768: { slidesPerView: 2 },
             1024: { slidesPerView: 2.5 },
+            1440: { slidesPerView: 3 },
           }}
         >
           {images.map((item, index) => (
             <SwiperSlide key={index} className="relative h-[480px]">
-  <Link to={item.route}>
-    <div className="relative overflow-hidden group h-full">
-      <img
-        src={item.src}
-        alt={item.title}
-        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-      />
-      <div className="absolute inset-0 flex justify-center items-center w-full h-full bg-black/30 text-white text-3xl font-bold">
-        <p>{item.title}</p>
-      </div>
-    </div>
-  </Link>
-</SwiperSlide>
-
+              <Link to={item.route}>
+                <div className="relative overflow-hidden group h-full">
+                  <img
+                    src={item.src}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 flex justify-center items-center w-full h-full bg-black/30 transition-opacity duration-500 group-hover:bg-black/50">
+                    <p className="text-white text-3xl font-bold whitespace-nowrap overflow-hidden text-overflow-ellipsis px-4">
+                      {item.title}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            </SwiperSlide>
           ))}
-          <div className="swiper-button-prev"></div>
-          <div className="swiper-button-next"></div>
+
+          <div className="swiper-button-prev !text-white !bg-black/50 !w-12 !h-12 !rounded-full !flex !items-center !justify-center hover:!bg-black/80 transition-all duration-300"></div>
+          <div className="swiper-button-next !text-white !bg-black/50 !w-12 !h-12 !rounded-full !flex !items-center !justify-center hover:!bg-black/80 transition-all duration-300"></div>
+  
+          <div className="swiper-pagination !relative !mt-6 !flex !justify-center !gap-2"></div>
         </Swiper>
-        
       </div>
     </div>
   );
