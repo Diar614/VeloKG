@@ -1,11 +1,10 @@
-
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { CartContext } from "../CartContext/CartContext"; 
+
 import "./GravelProductBike.css";
 
 const GravelProductCard = ({ product }) => {
-  const { addToCart } = useContext(CartContext);
+
 
   const bikes = [
     product.gravelBike1,
@@ -18,11 +17,13 @@ const GravelProductCard = ({ product }) => {
 
   if (bikes.length === 0) return null;
 
+  console.log("Product ID in GravelProductCard:", product.id);
+
   return (
     <div className="product-card-container">
       {bikes.map((bike, i) => (
         <div key={`${product.id}-${i}`} className="product-card">
-          <Link to={`/product/${product.id}`} className="relative w-full group">
+          <Link to={`/product/${product.id}?bikeIndex=${i}`} className="relative w-full group">
             <span className="absolute top-4 left-4 bg-black text-white text-sm font-semibold px-3 py-1 rounded-lg">
               Новое
             </span>
@@ -40,7 +41,7 @@ const GravelProductCard = ({ product }) => {
               <input
                 type="checkbox"
                 id={`compare-${product.id}-${i}`}
-                onChange={() => addToCart(bike)} 
+                onChange={() => addToCart(bike)}
               />
               <label htmlFor={`compare-${product.id}-${i}`} className="ml-2 text-sm text-gray-700">
                 + ДОБАВИТЬ В КАРЗИНУ

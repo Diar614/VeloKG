@@ -8,6 +8,7 @@ import Slider from "./Slider";
 import GravelProductCard from "./GravelProductCard";
 import { db } from "../../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
+import FreerideBikes from "../freerideBikes/FreerideBikes";
 
 const slides = [
   {
@@ -46,12 +47,15 @@ const GravelBike = () => {
   const [isHeaderVisible, setHeaderVisible] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]); 
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       const querySnapshot = await getDocs(collection(db, "products"));
-      const fetchedProducts = querySnapshot.docs.map((doc) => doc.data());
+      const fetchedProducts = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
       setProducts(fetchedProducts);
     };
 

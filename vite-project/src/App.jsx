@@ -1,10 +1,8 @@
-
 import React, { Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { CartProvider } from "./components/pages/CartContext/CartContext"; 
-
+import { CartProvider } from "./components/pages/CartContext/CartContext";
 
 const Cart = React.lazy(() => import("./components/pages/Cart/Cart"));
 const Register = React.lazy(() => import("./components/pages/register/Register"));

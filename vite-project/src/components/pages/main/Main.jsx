@@ -9,7 +9,6 @@ import ProductCard from "./ProductCard";
 import Speedometer from "../Speedometer";
 import "./styles.css";
 
-
 const faqData = [
   {
     question: "Каков максимальный клиренс шин?",
@@ -85,20 +84,21 @@ const Main = () => {
     threshold: 0.2,
   });
 
-  const { ref: productRef, inView: productInView } = useInView({
-    triggerOnce: false,
-    threshold: 0.2,
-  });
 
+ 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const productsCol = collection(db, "products");
         const productSnapshot = await getDocs(productsCol);
-        const productList = productSnapshot.docs.map(doc => doc.data());
-        setProducts(productList); 
+        const productList = productSnapshot.docs.map((doc) => ({
+          id: doc.id, 
+          ...doc.data(),
+        }));
+        setProducts(productList);
+        console.log("Загруженные продукты:", productList); 
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error("Ошибка при загрузке продуктов:", error);
       }
     };
 
@@ -141,35 +141,34 @@ const Main = () => {
           />
         </div>
         <div className="bg-[rgb(var(--background))] text-[rgb(var(--text-color))] p-8 text-center">
-  <h1 className="text-7xl font-bold">Будь в своей Стихии.</h1>
-  <div className="pt-20">
-    <h1 className="max-w-3xl mx-auto mt-6 text-xl">
-      Модель Element, разработанная для достижения идеального баланса
-      между лёгкостью, эффективностью при беге по пересечённой местности и
-      технической точностью, — это лучшее из возможного.
-    </h1>
-  </div>
+          <h1 className="text-7xl font-bold">Будь в своей Стихии.</h1>
+          <div className="pt-20">
+            <h1 className="max-w-3xl mx-auto mt-6 text-xl">
+              Модель Element, разработанная для достижения идеального баланса
+              между лёгкостью, эффективностью при беге по пересечённой местности и
+              технической точностью, — это лучшее из возможного.
+            </h1>
+          </div>
 
+          <div className="flex flex-wrap justify-center items-center space-x-40 text-4xl mt-10 pb-30 pt-10">
+            <div className="flex flex-col items-center mb-8">
+              <h1 className="text-5xl">Пересеченная местность</h1>
+              <p className="text-3xl text-gray-400 mt-2">Предназначен для</p>
+            </div>
 
-  <div className="flex flex-wrap justify-center items-center space-x-40 text-4xl mt-10 pb-30 pt-10">
-    <div className="flex flex-col items-center mb-8">
-      <h1 className="text-5xl">Пересеченная местность</h1>
-      <p className="text-3xl text-gray-400 mt-2">Предназначен для</p>
-    </div>
+            <div className="flex flex-col items-center mb-8">
+              <h1 className="text-xl">
+                <Speedometer />
+              </h1>
+            </div>
 
-    <div className="flex flex-col items-center mb-8">
-      <h1 className="text-xl">
-        <Speedometer />
-      </h1>
-    </div>
-
-    <div className="flex flex-col items-center mb-8">
-      <h1>29, 27.5</h1>
-      <p className="text-3xl text-gray-400 mt-2">Размер колеса</p>
-    </div>
-  </div>
-</div>
-<div className="bg-stone-50 min-h-screen p-6">
+            <div className="flex flex-col items-center mb-8">
+              <h1>29, 27.5</h1>
+              <p className="text-3xl text-gray-400 mt-2">Размер колеса</p>
+            </div>
+          </div>
+        </div>
+        <div className="bg-stone-50 min-h-screen p-6">
           <div className="product-list">
             {products.map((product, index) => (
               <ProductCard key={index} product={product} index={index} />

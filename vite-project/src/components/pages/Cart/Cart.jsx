@@ -1,39 +1,26 @@
-import React, { useContext } from "react";
-import { CartContext } from "../CartContext/CartContext"; 
-import "../gravelBike/GravelProductBike.css"; 
 
+
+import React from "react";
+import { useContext } from "react";
+import CartContext from "../CartContext/CartContext"; 
 const Cart = () => {
-  const { cart } = useContext(CartContext); 
-
-  console.log("Товары в корзине:", cart); // Логируем содержимое корзины
+  const { cart, removeFromCart } = useContext(CartContext); 
 
   return (
-    <div className="cart-container">
+    <div>
       <h2>Корзина</h2>
       {cart.length === 0 ? (
-        <p>Ваша корзина пуста</p>
+        <p>Ваша корзина пуста.</p>
       ) : (
-        <div className="product-card-container">
+        <ul>
           {cart.map((item) => (
-            <div key={item.id} className="product-card">
-              <div className="relative w-full group">
-                <span className="absolute top-4 left-4 bg-black text-white text-sm font-semibold px-3 py-1 rounded-lg">
-                  В корзине
-                </span>
-                <img
-                  className="w-full h-auto max-w-[600px] object-contain transition-transform duration-300 group-hover:scale-110 mx-auto"
-                  src={item.image || "https://default-image-url.jpg"}
-                  alt={item.name}
-                  loading="lazy"
-                />
-              </div>
-              <div className="details">
-                <h2>{item.name}</h2>
-                <p>{item.description}</p>
-              </div>
-            </div>
+            <li key={item.id}>
+              <img src={item.image} alt={item.name} />
+              <h3>{item.name}</h3>
+              <button onClick={() => removeFromCart(item.id)}>Удалить</button>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
     </div>
   );

@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import magnifier from "../../img/magnifier.svg";
+import user from "../../img/user.svg";
+import heart from "../../img/heart.svg";
+import cart from "../../img/cart.svg";
 import { motion, AnimatePresence } from "framer-motion";
 
 const SearchSidebar = ({ isSearchVisible, setSearchVisible }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [hoveredIcon, setHoveredIcon] = useState(null); // Для отслеживания наведения на иконку
 
   useEffect(() => {
     if (isSearchVisible) {
@@ -94,9 +99,23 @@ const SearchSidebar = ({ isSearchVisible, setSearchVisible }) => {
                   link.label.toLowerCase().includes(searchTerm.toLowerCase())
                 )
                 .map((link, index) => (
-                  <Link key={index} to={link.to} className="transition underline-animation pl-2">
-                    {highlightText(link.label, searchTerm)}
-                  </Link>
+                  <motion.div
+                    key={index}
+                    className="transition-all duration-300"
+                    onMouseEnter={() => setHoveredIcon(index)}
+                    onMouseLeave={() => setHoveredIcon(null)}
+                  >
+                    <Link
+                      to={link.to}
+                      className={`pl-2 transition-all duration-300 ${
+                        hoveredIcon === index
+                          ? "text-black transform scale-110"
+                          : "text-gray-500"
+                      }`}
+                    >
+                      {highlightText(link.label, searchTerm)}
+                    </Link>
+                  </motion.div>
                 ))}
             </div>
           </motion.div>

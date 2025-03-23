@@ -19,6 +19,19 @@ const FreerideBikes = () => {
   const swiperRef = useRef(null);
   const [cart, setCart] = useState([]); 
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const querySnapshot = await getDocs(collection(db, "products"));
+      const fetchedProducts = querySnapshot.docs.map((doc) => ({
+        id: doc.id, 
+        ...doc.data(),
+      }));
+      setProducts(fetchedProducts);
+    };
+
+    fetchProducts();
+  }, []);
+
   const handleAddToCart = (item) => {
     setCart((prevCart) => {
       const isItemInCart = prevCart.some((cartItem) => cartItem.id === item.id);
@@ -124,16 +137,17 @@ const FreerideBikes = () => {
       </motion.div>
 
       <div className="w-full h-full relative pt-10 pb-32">
-        <div className="product-list">
-          {products.map((product, index) => (
-            <FreerideProductBike
-              key={index}
-              product={product}
-              onAddToCart={handleAddToCart} 
-            />
-          ))}
-        </div>
-      </div>
+  <div className="product-list">
+    {products.map((product) => (
+      <FreerideProductBike
+        key={product.id} // Ensure the key is unique, using 'product.id'
+        product={product}
+        onAddToCart={handleAddToCart} 
+      />
+    ))}
+  </div>
+</div>
+
 
       <motion.div
         initial={{ opacity: 0, y: 50 }}

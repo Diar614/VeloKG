@@ -1,4 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { db } from "../../firebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
@@ -8,12 +10,23 @@ import "swiper/css/pagination";
 import Slider from "../gravelBike/Slider";
 import SearchSidebar from "../SearchSidebar";
 import Header from "../Header";
-
+import KidsProductBike from "./KidsProductBike";
 
 const KidsBikes = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isSearchVisible, setSearchVisible] = useState(false);
+  const [products, setProducts] = useState([]);
   const swiperRef = useRef(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const querySnapshot = await getDocs(collection(db, "products"));
+      const productsData = querySnapshot.docs.map((doc) => doc.data());
+      setProducts(productsData);
+    };
+
+    fetchProducts();
+  }, []);
 
   const slides = [
     {
@@ -46,7 +59,6 @@ const KidsBikes = () => {
     },
   ];
 
- 
   const handleDotClick = (index) => {
     swiperRef.current.swiper.slideTo(index);
     setActiveIndex(index);
@@ -69,18 +81,39 @@ const KidsBikes = () => {
           <Header
             isSearchVisible={isSearchVisible}
             setSearchVisible={setSearchVisible}
-          />  <h1 className="text-xl font-light text-white text-center pt-20 sm:pt-40 lg:pt-60 px-4 sm:px-8 lg:px-16 ">
-         Предстоящее путешествие начинается здесь
+          />
+          <h1 className="text-xl font-light text-white text-center pt-60 sm:pt-60 lg:pt-80 px-4 sm:px-8 lg:px-16 ">
+            Предстоящее путешествие начинается здесь
           </h1>
-          <h1 className="text-9xlxl sm:text-6xl md:text-7xl font-light text-white text-center   px-4 sm:px-8 lg:px-16 pt-10">
-          Детские велосипеды
+          <h1 className="text-9xlxl sm:text-6xl md:text-7xl font-light text-white text-center px-4 sm:px-8 lg:px-16 pt-10">
+            Детские велосипеды
           </h1>
         </div>
       </div>
+      <div className="flex flex-col items-center justify-center text-center py-20 px-[15%]">
 
-      
+        <p className="text-5xl font-bold mx-auto pt-10">
+        Приступим
+        </p>
+        <h1 className="text-[25px] font-light pt-15">
+        Учитесь кататься? Начните здесь. Просто, надежно и с несколькими размерами колес, чтобы подойти для разных возрастных групп детей
+        </h1>
+      </div>
+      <div className="product-list px-[15%]">
+        {products.map((product, index) => (
+          <KidsProductBike key={index} product={product} />
+        ))}
+      </div>
 
-     
+      <div className="swiper-container overflow-x-hidden">
+        <Slider
+          slides={slides}
+          activeIndex={activeIndex}
+          setActiveIndex={setActiveIndex}
+          swiperRef={swiperRef}
+          handleDotClick={handleDotClick}
+        />
+      </div>
     </div>
   );
 };
