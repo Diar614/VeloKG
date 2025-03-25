@@ -8,7 +8,7 @@ import Slider from "./Slider";
 import GravelProductCard from "./GravelProductCard";
 import { db } from "../../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
-import FreerideBikes from "../freerideBikes/FreerideBikes";
+
 
 const slides = [
   {
@@ -17,23 +17,14 @@ const slides = [
       "https://bikes.com/cdn/shop/files/Web_Solo_MRiga_RAnderson_Saskatchewan_MRP1153.jpg?v=1679692674&width=832",
     link: "/gravelBike",
   },
-  {
-    title: "Толстокожие велосипеды",
-    image:
-      "https://bikes.com/cdn/shop/files/Web_BlizzardC90_MRiga_WSimmons_BritishColumbia-16_1.jpg?v=1698359080&width=832",
-  },
+
   {
     title: "Велосипеды для кросс-кантри",
     link: "/crossCountry",
     image:
       "https://bikes.com/cdn/shop/files/Web_Element_MRiga_ALN_RGauvin_BritishColumbia-3_c76b4a8a-80de-423c-9523-2f82ac032889.jpg?v=1649135431&width=832",
   },
-  {
-    title: "Велосипеды для трейла",
-    link: "/trailBikes",
-    image:
-      "https://bikes.com/cdn/shop/files/Print_Instinct_MRiga_FBurke_MontTremblantQC-10_49cd488e-a314-4501-b4d6-4bff57977012.jpg?v=1673485036&width=832",
-  },
+
   {
     title: "Велосипеды для эндуро",
     image:
@@ -131,18 +122,17 @@ const GravelBike = () => {
           Эндуро-катание на горных велосипедах уходит корнями в гонки на эндуро. В гонках на эндуро гонщики соревнуются на определённых участках (обычно на спусках), но должны перемещаться между участками, на которых ведётся отсчёт времени. Таким образом, эндуро-катание на горных велосипедах в некоторых аспектах похоже на катание на скоростных спусках. Велосипеды сконструированы так, чтобы обеспечить невероятный уровень мастерства при спуске. Однако эндуро-велосипеды отличаются от велосипедов для скоростных спусков или фрирайда тем, что они немного более универсальны. Они очень хорошо взбираются на холмы, несмотря на свою массивность, в то время как велосипед для скоростного спуска практически бесполезен, если только он не едет, ну, вниз по склону.
         </p>
       </motion.div>
-
       <div className="w-full h-full relative pt-10 pb-32">
-        <div className="product-list px-[15%]">
-          {products.map((product, index) => (
-            <GravelProductCard
-              key={index}
-              product={product}
-              onAddToCart={handleAddToCart}
-            />
-          ))}
-        </div>
+      <div className="product-list">
+        {products.map((product) => (
+          <FreerideProductBike
+            key={product.id}
+            product={product}
+            onAddToCart={handleAddToCart}
+          />
+        ))}
       </div>
+    </div>
 
       <motion.div
         ref={sectionRef}

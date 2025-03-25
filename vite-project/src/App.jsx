@@ -4,7 +4,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CartProvider } from "./components/pages/CartContext/CartContext";
 
+const AskQuestion = React.lazy(() => import("./components/pages/AskQuestion/AskQuestion"));
+
 const Cart = React.lazy(() => import("./components/pages/Cart/Cart"));
+const Bikes = React.lazy(() => import("./components/pages/bikes/Bikes"));
 const Register = React.lazy(() => import("./components/pages/register/Register"));
 const Main = React.lazy(() => import("./components/pages/main/Main"));
 const UserAccount = React.lazy(() => import("./components/pages/userAccaunt/UserAccount"));
@@ -18,6 +21,7 @@ const KidsBikes = React.lazy(() => import("./components/pages/kidsBikes/KidsBike
 const TrailBikes = React.lazy(() => import("./components/pages/trailBikes/TrailBikes"));
 const Login = React.lazy(() => import("./components/pages/login/Login"));
 const ProductDetail = React.lazy(() => import("./components/pages/ProductDetail/ProductDetail"));
+const Checkout = React.lazy(() => import("./components/pages/ProductDetail/Checkout"));
 const Altitude = React.lazy(() => import("./components/pages/altitude/Altitude"));
 
 const App = () => {
@@ -38,7 +42,9 @@ const App = () => {
         <Suspense fallback={<div>Загрузка...</div>}>
           <Routes>
             <Route path="/" element={<TheMain />} />
+            <Route path="/AskQuestion" element={<AskQuestion/>} />
             <Route path="/main" element={<Main />} />
+            <Route path="/bikes" element={<Bikes />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/userAccount" element={<UserAccount />} />
@@ -51,7 +57,9 @@ const App = () => {
             <Route path="/trailBikes" element={<TrailBikes />} />
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/Checkout" element={<Checkout />} />
             <Route path="/altitude" element={<Altitude />} />
+           
           </Routes>
         </Suspense>
       </Router>

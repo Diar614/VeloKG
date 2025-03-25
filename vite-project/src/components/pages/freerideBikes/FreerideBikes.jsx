@@ -17,13 +17,14 @@ const FreerideBikes = () => {
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [products, setProducts] = useState([]);
   const swiperRef = useRef(null);
-  const [cart, setCart] = useState([]); 
+  const [cart, setCart] = useState([]);
 
+  // Единственный useEffect для загрузки продуктов
   useEffect(() => {
     const fetchProducts = async () => {
       const querySnapshot = await getDocs(collection(db, "products"));
       const fetchedProducts = querySnapshot.docs.map((doc) => ({
-        id: doc.id, 
+        id: doc.id,
         ...doc.data(),
       }));
       setProducts(fetchedProducts);
@@ -36,9 +37,9 @@ const FreerideBikes = () => {
     setCart((prevCart) => {
       const isItemInCart = prevCart.some((cartItem) => cartItem.id === item.id);
       if (isItemInCart) {
-        return prevCart; 
+        return prevCart;
       }
-      return [...prevCart, item]; 
+      return [...prevCart, item];
     });
   };
 
@@ -73,16 +74,6 @@ const FreerideBikes = () => {
       link: "/enduro",
     },
   ];
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const querySnapshot = await getDocs(collection(db, "products"));
-      const productsList = querySnapshot.docs.map((doc) => doc.data());
-      setProducts(productsList);
-    };
-
-    fetchProducts();
-  }, []);
 
   const handleDotClick = (index) => {
     swiperRef.current.swiper.slideTo(index);
@@ -137,17 +128,16 @@ const FreerideBikes = () => {
       </motion.div>
 
       <div className="w-full h-full relative pt-10 pb-32">
-  <div className="product-list">
-    {products.map((product) => (
-      <FreerideProductBike
-        key={product.id} // Ensure the key is unique, using 'product.id'
-        product={product}
-        onAddToCart={handleAddToCart} 
-      />
-    ))}
-  </div>
-</div>
-
+        <div className="product-list">
+          {products.map((product) => (
+            <FreerideProductBike
+              key={product.id}
+              product={product}
+              onAddToCart={handleAddToCart}
+            />
+          ))}
+        </div>
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: 50 }}

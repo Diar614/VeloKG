@@ -1,0 +1,231 @@
+/* src/components/Checkout/Checkout.css */
+.checkout-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #2d3748;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+  
+  .checkout-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    grid-column: 1 / -1;
+  }
+  
+  .checkout-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .checkout-header h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #4299e1, #38b2ac);
+    border-radius: 2px;
+  }
+  
+  .order-summary {
+    padding: 2rem;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+  }
+  
+  .order-summary h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #1a202c;
+    position: relative;
+    padding-bottom: 0.5rem;
+  }
+  
+  .order-summary h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #4299e1, #38b2ac);
+    border-radius: 3px;
+  }
+  
+  .order-summary img {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  }
+  
+  .order-details {
+    margin-top: 1.5rem;
+  }
+  
+  .order-details p {
+    font-size: 1.1rem;
+    color: #4a5568;
+    margin-bottom: 0.8rem;
+    line-height: 1.6;
+  }
+  
+  .order-details .price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2d3748;
+  }
+  
+  .checkout-form {
+    padding: 2rem;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  }
+  
+  .checkout-form h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #1a202c;
+    position: relative;
+    padding-bottom: 0.5rem;
+  }
+  
+  .checkout-form h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #4299e1, #38b2ac);
+    border-radius: 3px;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #4a5568;
+    font-weight: 500;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+  }
+  
+  .form-group textarea {
+    height: 120px;
+    resize: vertical;
+  }
+  
+  .submit-order {
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #48bb78, #38b2ac);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(72, 187, 120, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 100%;
+  }
+  
+  .submit-order:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(72, 187, 120, 0.4);
+    background: linear-gradient(135deg, #38a169, #2c7a7b);
+  }
+  
+  .submit-order:active {
+    transform: translateY(0);
+  }
+  
+  @media (max-width: 1024px) {
+    .checkout-header h1 {
+      font-size: 2.2rem;
+    }
+    
+    .order-summary h2,
+    .checkout-form h2 {
+      font-size: 1.6rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .checkout-container {
+      grid-template-columns: 1fr;
+      padding: 1.5rem;
+      gap: 2rem;
+    }
+    
+    .checkout-header h1 {
+      font-size: 2rem;
+    }
+    
+    .order-summary,
+    .checkout-form {
+      padding: 1.5rem;
+    }
+    
+    .submit-order {
+      padding: 0.9rem 1.5rem;
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .checkout-container {
+      padding: 1rem;
+    }
+    
+    .checkout-header h1 {
+      font-size: 1.8rem;
+    }
+    
+    .order-summary h2,
+    .checkout-form h2 {
+      font-size: 1.4rem;
+    }
+    
+    .order-details p,
+    .form-group input,
+    .form-group textarea {
+      font-size: 1rem;
+    }
+  }

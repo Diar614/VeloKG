@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const SearchSidebar = ({ isSearchVisible, setSearchVisible }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [hoveredIcon, setHoveredIcon] = useState(null); // Для отслеживания наведения на иконку
+  const [hoveredIcon, setHoveredIcon] = useState(null); 
 
   useEffect(() => {
     if (isSearchVisible) {
@@ -23,13 +23,13 @@ const SearchSidebar = ({ isSearchVisible, setSearchVisible }) => {
 
   const links = [
     { to: "/", label: "Главная" },
-    { to: "/E_bikes", label: "Электронные велосипеды" },
+    { to: "/Bikes", label: "Все велосипеды" },
     { to: "/enduro", label: "Ендуро велосипеды" },
     { to: "/freerideBike", label: "Фрирайд велосипеды" },
     { to: "/gravelBike", label: "Гравийные велосипеды" },
     { to: "/crossCountry", label: "Велосипеды для кросс каунтри" },
     { to: "/kidsBikes", label: "Детские велосипеды" },
-    { to: "/trailBikes", label: "Велосипеды для трейла" },
+    { to: "/AskQuestion", label: "Задать вопрос" },
     { to: "/", label: "Поддержка" },
   ];
 

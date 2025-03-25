@@ -1,17 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const FriradeProductCard = ({ product, onAddToCart }) => {
-
+const FreerideProductCard = ({ product, onAddToCart }) => {
   const bikes = [
     product.friradeBike,
     product.friradeBike1,
-    product.friradeBike2,
     product.friradeBike3,
     product.friradeBike4,
   ].filter(Boolean); 
 
- 
   if (bikes.length === 0) return null;
 
   return (
@@ -23,7 +20,7 @@ const FriradeProductCard = ({ product, onAddToCart }) => {
               Новое
             </span>
             <img
-              className="w-full h-auto max-w-[600px] object-contain transition-transform duration-300 group-hover:scale-110 mx-auto"
+              className="w-full h-auto max-w-[600px] object-contain transition-transform duration-300 mx-auto"
               src={bike.image || "https://via.placeholder.com/600"} 
               alt={bike.name}
               loading="lazy"
@@ -49,4 +46,4 @@ const FriradeProductCard = ({ product, onAddToCart }) => {
   );
 };
 
-export default FriradeProductCard;
+export default FreerideProductCard;

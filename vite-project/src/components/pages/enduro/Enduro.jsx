@@ -23,18 +23,7 @@ const slides = [
       "https://bikes.com/cdn/shop/files/Web_Solo_MRiga_RAnderson_Saskatchewan_MRP1153.jpg?v=1679692674&width=832",
     link: "/gravelBike",
   },
-  {
-    title: "Толстокожие велосипеды",
 
-    image:
-      "https://bikes.com/cdn/shop/files/Web_BlizzardC90_MRiga_WSimmons_BritishColumbia-16_1.jpg?v=1698359080&width=832",
-  },
-  {
-    title: "Велосипеды для кросс-кантри",
-    link: "/crossCountry",
-    image:
-      "https://bikes.com/cdn/shop/files/Web_Element_MRiga_ALN_RGauvin_BritishColumbia-3_c76b4a8a-80de-423c-9523-2f82ac032889.jpg?v=1649135431&width=832",
-  },
   {
     title: "Велосипеды для трейла",
     link: "/trailBikes",

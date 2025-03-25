@@ -7,11 +7,7 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/swiper-bundle.css"; 
 
 const images = [
-  {
-    src: "https://bikes.com/cdn/shop/files/SBP_7400533_2.jpg?v=1715294042&width=800",
-    title: "Электровелосипеды",
-    route: "/E_bikes",
-  },
+
   {
     route: "/crossCountry",
     src: "https://bikes.com/cdn/shop/files/Web_Element_MRiga_AHestler_NorthVancouverBC_MRP4009_1.jpg?v=1724443951&width=800",

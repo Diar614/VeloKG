@@ -27,22 +27,13 @@ const CrossCountry = () => {
         "https://bikes.com/cdn/shop/files/Web_Solo_MRiga_RAnderson_Saskatchewan_MRP1153.jpg?v=1679692674&width=832",
       link: "/gravelBike",
     },
-    {
-      title: "Толстокожие велосипеды",
-      image:
-        "https://bikes.com/cdn/shop/files/Web_BlizzardC90_MRiga_WSimmons_BritishColumbia-16_1.jpg?v=1698359080&width=832",
-    },
+
     {
       title: "Велосипеды для кросс-кантри",
       image:
         "https://bikes.com/cdn/shop/files/Web_Element_MRiga_ALN_RGauvin_BritishColumbia-3_c76b4a8a-80de-423c-9523-2f82ac032889.jpg?v=1649135431&width=832",
     },
-    {
-      title: "Велосипеды для трейла",
-      link: "/trailBikes",
-      image:
-        "https://bikes.com/cdn/shop/files/Print_Instinct_MRiga_FBurke_MontTremblantQC-10_49cd488e-a314-4501-b4d6-4bff57977012.jpg?v=1673485036&width=832",
-    },
+
     {
       title: "Велосипеды для эндуро",
       image:

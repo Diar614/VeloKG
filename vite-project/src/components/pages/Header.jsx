@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import magnifier from "../../img/magnifier.svg";
 import user from "../../img/user.svg";
-import heart from "../../img/heart.svg";
+
 import cart from "../../img/cart.svg";
 import "./Header.css";
+
 
 const Header = ({ isSearchVisible, setSearchVisible }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -40,9 +41,11 @@ const Header = ({ isSearchVisible, setSearchVisible }) => {
           alt="Поиск"
         />
         <img className="icon" src={user} onClick={() => navigate("/register")}  />
-        <img className="icon" src={heart}  />
+
         <img className="icon" src={cart} onClick={() => navigate("/Cart")}/>
+        
       </div>
+      
     </header>
   );
 };
