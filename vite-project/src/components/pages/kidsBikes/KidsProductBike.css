@@ -1,97 +1,155 @@
-.product-card {
-    display: flex;
-    width: 100%; 
-    max-width: 1400px; 
-    height: 400px; 
-    background: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 20px; 
+
+.kids-bike-card-compact {
+  position: relative;
+  background: white;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid #e5e7eb;
+  height: 320px; 
+  display: flex;
+  flex-direction: column;
+}
+
+.kids-bike-card-header {
+  position: relative;
+  padding: 0.5rem;
+}
+
+.kids-bike-badge-compact {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background-color: #3b82f6;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  z-index: 10;
+}
+
+.kids-favorite-btn-compact {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  width: 1.8rem;
+  height: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.kids-favorite-btn-compact:hover {
+  transform: scale(1.1);
+}
+
+.kids-favorite-btn-compact.favorited {
+  background-color: #ef4444;
+  color: white;
+}
+
+.kids-bike-image-link-compact {
+  display: block;
+  flex-grow: 1;
+  padding: 0.5rem;
+}
+
+.kids-bike-image-compact {
+  width: 100%;
+  height: 160px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.kids-bike-card-compact:hover .kids-bike-image-compact {
+  transform: scale(1.03);
+}
+
+.kids-bike-details-compact {
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.kids-bike-title-compact {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kids-bike-price-compact {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #3b82f6;
+  margin-bottom: 0.5rem;
+}
+
+.kids-bike-actions-compact {
+  margin-top: auto;
+}
+
+.kids-add-to-cart-compact {
+  width: 100%;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.kids-add-to-cart-compact:hover {
+  background-color: #2563eb;
+}
+
+
+.kids-info-section-compact {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 1rem;
+  margin: 1rem 0;
+  background-color: #f8fafc;
+  border-radius: 0.5rem;
+}
+
+.kids-info-section-compact h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+}
+
+.kids-info-section-compact p {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+/* Адаптация сетки */
+@media (min-width: 640px) {
+  .kids-products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
-  
-  .product-image {
-    flex: 1; 
-    position: relative;
+}
+
+@media (min-width: 1024px) {
+  .kids-products-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
-  
-  .product-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; 
-  }
-  
-  .product-details {
-    flex: 1; 
-    background: #2d2d2d; 
-    color: white;
-    padding: 40px; 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .product-details h2 {
-    font-size: 2rem; 
-    font-weight: bold;
-    line-height: 1.4;
-    margin-bottom: 15px; 
-  }
-  
-  
-  .product-details p {
-    font-size: 1.125rem; 
-    line-height: 1.6; 
-    color: #ccc;
-    margin-bottom: 20px;
-  }
-  
-  
-  .add-to-cart {
-    display: flex;
-    align-items: center;
-  }
-  
-  .add-to-cart input {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-  }
-  
-  .add-to-cart label {
-    font-size: 0.875rem; 
-    color: #ccc;
-    cursor: pointer;
-  }
-  
-  
-  @media (max-width: 768px) {
-    .product-card {
-      flex-direction: column; 
-    }
-  
-    .product-image,
-    .product-details {
-      flex: none;
-      width: 100%;
-    }
-  
-    .product-details {
-      padding: 20px; 
-    }
-  
-    .product-details h2 {
-      font-size: 1.25rem;
-    }
-  
-    .product-details p {
-      font-size: 1.125rem;
-      line-height: 1.6;
-      color: #ccc;
-      margin-bottom: 20px;
-    }
-    
-  
-    .add-to-cart label {
-      font-size: 0.75rem;
-    }
-  }
+}

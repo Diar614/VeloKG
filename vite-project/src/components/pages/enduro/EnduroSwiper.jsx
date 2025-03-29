@@ -15,61 +15,90 @@ const EnduroSwiper = ({ slides }) => {
   };
 
   return (
-    <div className="bg-[#181314] text-white py-10 px-4 relative">
-      <h1 className="text-5xl pb-10 text-center font-bold">
+    <div className="bg-[#181314] text-white py-16 relative w-screen overflow-hidden -mx-[calc((100vw-100%)/2)]">
+      <h1 className="text-4xl md:text-5xl pb-12 text-center font-bold">
         Ищете что-то другое?
       </h1>
-      <Swiper
-        modules={[Navigation, Pagination]}
-        spaceBetween={30}
-        slidesPerView={1}
-        centeredSlides
-        loop
-        navigation={{ prevEl: ".prev-button", nextEl: ".next-button" }}
-        pagination={{ clickable: true }}
-        onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)} 
-        ref={swiperRef}
-        className="!w-[55%] mx-auto !overflow-visible"
-      >
-        {slides.map((slide, index) => (
-          <SwiperSlide key={index}>
-            <div className="relative group rounded-xl overflow-hidden">
-              <img
-                src={slide.image}
-                className="w-full h-[300px] object-cover rounded-xl transition-transform duration-500 ease-out group-hover:scale-105"
-                alt={slide.title}
-              />
+      
+      <div className="relative w-screen">
+        {/* Навигационные кнопки */}
+        <button className="prev-button absolute left-4 top-1/2 z-10 -translate-y-1/2 bg-black/30 hover:bg-black/50 p-3 rounded-full transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        
+        <button className="next-button absolute right-4 top-1/2 z-10 -translate-y-1/2 bg-black/30 hover:bg-black/50 p-3 rounded-full transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
 
-              <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-6">
-                <h2 className="text-3xl font-bold">{slide.title}</h2>
-                <p className="text-lg mt-2 max-w-[80%] opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-gray-500 group-hover:text-white">
-                  {slide.text}
-                </p>
+        {/* Слайдер на всю ширину экрана */}
+        <Swiper
+          modules={[Navigation, Pagination]}
+          spaceBetween={0}
+          slidesPerView={1}
+          centeredSlides
+          loop
+          navigation={{ 
+            prevEl: ".prev-button", 
+            nextEl: ".next-button" 
+          }}
+          pagination={{ 
+            clickable: true,
+            el: '.swiper-pagination',
+            type: 'bullets',
+          }}
+          onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+          ref={swiperRef}
+          className="w-screen"
+        >
+          {slides.map((slide, index) => (
+            <SwiperSlide key={index} className="w-screen">
+              <div className="relative group w-screen h-[60vh] min-h-[500px]">
+                <img
+                  src={slide.image}
+                  className="w-screen h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  alt={slide.title}
+                />
 
-                <Link
-                  to="/more-info"
-                  className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 hover:bg-blue-700 cursor-pointer"
-                >
-                  Узнать больше
-                </Link>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end pb-16 px-8 md:px-16">
+                  <div className="max-w-4xl mx-auto text-center">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-4">{slide.title}</h2>
+                    <p className="text-lg md:text-xl opacity-90 mb-6">{slide.text}</p>
+                    <Link
+                      to={slide.link || "/more-info"}
+                      className="inline-block px-8 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors duration-300"
+                    >
+                      Узнать больше
+                    </Link>
+                  </div>
+                </div>
               </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+            </SwiperSlide>
+          ))}
+        </Swiper>
 
-      <div className="absolute bottom-4 w-full flex justify-center space-x-6 text-xl text-gray-500 px-[15%] pt-[5%]">
-        {slides.map((slide, index) => (
-          <button
-            key={index}
-            onClick={() => handleCategoryClick(index)} 
-            className={`transition-colors duration-500 ${
-              activeIndex === index ? "text-white font-semibold" : "text-gray-500"
-            }`}
-          >
-            {slide.title} 
-          </button>
-        ))}
+        <div className="swiper-pagination !relative !mt-6 flex justify-center gap-2"></div>
+      </div>
+
+      <div className="container mx-auto px-4 pt-8 pb-4">
+        <div className="flex flex-wrap justify-center gap-4 md:gap-8">
+          {slides.map((slide, index) => (
+            <button
+              key={index}
+              onClick={() => handleCategoryClick(index)}
+              className={`px-4 py-2 rounded-full transition-all duration-300 ${
+                activeIndex === index 
+                  ? "bg-red-600 text-white font-medium" 
+                  : "bg-gray-800 text-gray-300 hover:bg-gray-700"
+              }`}
+            >
+              {slide.title}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-/* Основные стили шапки */
+
 .header {
     position: fixed;
     top: 0;
@@ -12,27 +12,26 @@
     transition: all 0.3s ease-in-out;
     z-index: 50;
   }
-  
-  /* При прокрутке */
+
   .header.scrolled {
     background: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   }
   
-  /* Скрытие шапки при прокрутке вниз */
+  
   .header.hidden {
     transform: translateY(-100%);
   }
   
-  /* Контейнер иконок */
+
   .header-icons {
     display: flex;
     align-items: center;
     gap: 20px;
   }
   
-  /* Стили иконок */
+ 
   .icon {
     width: 28px;
     height: 28px;
@@ -45,7 +44,7 @@
     opacity: 0.8;
   }
   
-  /* Адаптивность */
+
   @media (max-width: 1024px) {
     .header {
       height: 55px;

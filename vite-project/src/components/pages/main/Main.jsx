@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+
+import React, { useState, useEffect, useRef } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import { useInView } from "react-intersection-observer";
@@ -7,7 +8,14 @@ import Header from "../Header";
 import SearchSidebar from "../SearchSidebar";
 import ProductCard from "./ProductCard";  
 import Speedometer from "../Speedometer";
-import "./styles.css";
+import { Link } from "react-router-dom";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+
 
 const faqData = [
   {
@@ -41,7 +49,6 @@ const faqData = [
     answer: "Элемент предназначен для хода вилки от 120 до 140 мм",
   },
 ];
-
 const FAQItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -74,18 +81,44 @@ const FAQItem = ({ question, answer }) => {
   );
 };
 
+
 const Main = () => {
   const [products, setProducts] = useState([]);
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [isHeaderVisible, setHeaderVisible] = useState(true);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const swiperRef = useRef(null);
 
   const { ref: faqRef, inView: faqInView } = useInView({
     triggerOnce: false,
     threshold: 0.2,
   });
 
+  const slides = [
+    {
+      title: "Гравийные велосипеды",
+      image: "https://bikes.com/cdn/shop/files/Web_Solo_MRiga_RAnderson_Saskatchewan_MRP1153.jpg",
+      link: "/gravelBike",
+    },
+    {
+      title: "Толстокожие велосипеды",
+      image: "https://bikes.com/cdn/shop/files/Web_BlizzardC90_MRiga_WSimmons_BritishColumbia-16_1.jpg",
+      link: "/fatbikes",
+    },
+    {
+      title: "Кросс-кантри",
+      image: "https://bikes.com/cdn/shop/files/Web_Element_MRiga_ALN_RGauvin_BritishColumbia-3.jpg",
+      link: "/crossCountry",
+    },
+  ];
 
- 
+  const handleDotClick = (index) => {
+    if (swiperRef.current && swiperRef.current.swiper) {
+      swiperRef.current.swiper.slideTo(index);
+    }
+    setActiveIndex(index);
+  };
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -96,163 +129,201 @@ const Main = () => {
           ...doc.data(),
         }));
         setProducts(productList);
-        console.log("Загруженные продукты:", productList); 
       } catch (error) {
         console.error("Ошибка при загрузке продуктов:", error);
       }
     };
 
     fetchProducts();
-
-    const handleScroll = () => {
-      const image = document.querySelector("img.w-full.h-auto");
-      if (!image) return;
-      const rect = image.getBoundingClientRect();
-      setHeaderVisible(rect.bottom > 0);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
   }, []);
 
   return (
-    <>
-      <div className="w-full h-full relative">
-        <SearchSidebar
-          isSearchVisible={isSearchVisible}
+    <div className="bg-white">
+
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <Header 
+          isSearchVisible={isSearchVisible} 
           setSearchVisible={setSearchVisible}
         />
-        <div className="relative z-10">
-          <Header
-            isSearchVisible={isSearchVisible}
-            setSearchVisible={setSearchVisible}
-            isHeaderVisible={isHeaderVisible}
-          />
-        </div>
+      </div>
 
-        <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
-          <img
-            className="w-full h-full object-cover absolute top-0 left-0"
-            src="https://bikes.com/cdn/shop/files/RM_2025_Website_CollectionHero_Element_Action_v2_1.jpg?v=1726247080&width=2000"
-            alt="Hero"
-          />
-        </div>
-        <div className="bg-[rgb(var(--background))] text-[rgb(var(--text-color))] p-8 text-center">
-          <h1 className="text-7xl font-bold">Будь в своей Стихии.</h1>
-          <div className="pt-20">
-            <h1 className="max-w-3xl mx-auto mt-6 text-xl">
-              Модель Element, разработанная для достижения идеального баланса
-              между лёгкостью, эффективностью при беге по пересечённой местности и
-              технической точностью, — это лучшее из возможного.
-            </h1>
+ 
+      <SearchSidebar 
+        isSearchVisible={isSearchVisible} 
+        setSearchVisible={setSearchVisible} 
+      />
+
+      
+      <div className=""> 
+        
+      
+        <div className="relative h-[70vh] md:h-screen overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <img
+              src="https://bikes.com/cdn/shop/files/RM_2025_Website_CollectionHero_Element_Action_v2_1.jpg?v=1726247080&width=2000"
+              alt="Hero"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black/40"></div>
           </div>
 
-          <div className="flex flex-wrap justify-center items-center space-x-40 text-4xl mt-10 pb-30 pt-10">
-            <div className="flex flex-col items-center mb-8">
-              <h1 className="text-5xl">Пересеченная местность</h1>
-              <p className="text-3xl text-gray-400 mt-2">Предназначен для</p>
-            </div>
-
-            <div className="flex flex-col items-center mb-8">
-              <h1 className="text-xl">
-                <Speedometer />
+          <div className="relative z-10 h-full flex flex-col justify-center text-center px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="max-w-4xl mx-auto"
+            >
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 md:mb-6">
+                Будь в своей Стихии
               </h1>
-            </div>
-
-            <div className="flex flex-col items-center mb-8">
-              <h1>29, 27.5</h1>
-              <p className="text-3xl text-gray-400 mt-2">Размер колеса</p>
-            </div>
+              <p className="text-lg md:text-xl text-gray-200 mb-6 md:mb-8 max-w-3xl mx-auto">
+                Модель Element, разработанная для достижения идеального баланса
+                между лёгкостью, эффективностью при беге по пересечённой местности и
+                технической точностью, — это лучшее из возможного.
+              </p>
+              <motion.button
+                onClick={() => {
+                  const productsSection = document.getElementById("products");
+                  if (productsSection) {
+                    productsSection.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 md:py-4 md:px-10 rounded-lg transition-colors duration-300 text-base md:text-lg"
+              >
+                Смотреть модели
+              </motion.button>
+            </motion.div>
           </div>
         </div>
-        <div className="bg-stone-50 min-h-screen p-6">
-          <div className="product-list">
-            {products.map((product, index) => (
-              <ProductCard key={index} product={product} index={index} />
-            ))}
-          </div>
-        </div>
 
-        <h2 className="text-3xl font-bold text-center mb-4 pt-20">
-          Часто задаваемые вопросы
-        </h2>
-        <div
-          ref={faqRef}
-          className={`w-full h-full relative pt-10 pb-32 ${
-            faqInView ? "opacity-100" : "opacity-0"
-          }`}
-          style={{ transition: "opacity 1s" }}
-        >
-          <div className="p-6 max-w-4xl mx-auto mt-10 bg-stone-100">
-            <h1 className="text-xl">
+    
+        <section className="py-12 md:py-16 bg-[rgb(var(--background))] text-[rgb(var(--text-color))]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                viewport={{ once: true }}
+                className="p-6"
+              >
+                <h3 className="text-2xl md:text-3xl font-bold mb-2">Пересеченная местность</h3>
+                <p className="text-gray-400 text-lg">Предназначен для</p>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                viewport={{ once: true }}
+                className="p-6"
+              >
+                <Speedometer />
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                viewport={{ once: true }}
+                className="p-6"
+              >
+                <h3 className="text-2xl md:text-3xl font-bold mb-2">29, 27.5</h3>
+                <p className="text-gray-400 text-lg">Размер колеса</p>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+   
+        <section id="products" className="py-12 md:py-16 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="text-center mb-8 md:mb-12"
+            >
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 md:mb-4">Модельный ряд</h2>
+              <div className="w-16 md:w-20 h-1 md:h-2 bg-blue-600 mx-auto"></div>
+            </motion.div>
+
+            <div className="space-y-12 md:space-y-16">
+              {products.map((product, index) => (
+                <ProductCard key={index} product={product} index={index} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+      
+        <section className="py-12 md:py-16 bg-white">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-8 md:mb-12"
+            >
+              Часто задаваемые вопросы
+            </motion.h2>
+            
+            <div className="bg-gray-50 rounded-xl p-6 md:p-8">
               {faqData.map((item, index) => (
                 <FAQItem key={index} {...item} />
               ))}
-            </h1>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <div className="bg-[#181314] text-white pb-12 px-[10%] ">
-          <h1 className="text-5xl pt-16 pb-12 pl-[30px]">Ищете что-то другое?</h1>
-          <div className="flex justify-center gap-10 items-center flex-wrap">
-            <div className="flex flex-col items-center max-w-[500px] mx-4">
-              <img
-                src="https://bikes.com/cdn/shop/files/Web_Instinct_MRiga_SSchultz_TobyCreekBC_MRP1442_edited.jpg?v=1711387112&width=500"
-                alt=""
-                className="w-full h-[300px] rounded-xl"
-              />
-              <h2 className="text-3xl pt-5 font-medium">Инстинкт</h2>
-              <p className="text-xl pb-4 text-center pt-10">
-                Полная универсальность маршрута
-              </p>
-              <p className="text-xl pb-4 text-center pt-5">
-                Если вы ищете универсальный велосипед, обратите внимание на
-                Instinct. Мы разработали велосипед, который подходит для езды по
-                сложным трассам, но при этом позволяет сильно давить на педали на
-                подъёмах.
-              </p>
-            </div>
-            <div className="flex flex-col items-center max-w-[500px] mx-4">
-              <img
-                src="https://bikes.com/cdn/shop/files/Print_InstinctPowerplay_WSimmons_MRiga_GoldenBC-19_1.jpg?v=1640043079&width=500"
-                alt=""
-                className="w-full h-[300px] rounded-xl"
-              />
-              <h2 className="text-3xl pt-5 font-medium">Игра Власти Инстинкта</h2>
-              <p className="text-xl pb-4 text-center pt-10">
-                Полная универсальность трассы, электрифицированная⚡
-              </p>
-              <p className="text-xl pb-4 text-center pt-5">
-                Если вы хотите отправиться в высокогорную местность или
-                исследовать новую зону, то Instinct Powerplay вдохновит вас на то,
-                чтобы пойти дальше и искать новые приключения.
-              </p>
-            </div>
-            <div className="flex flex-col items-center max-w-[500px] mx-4">
-              <img
-                src="https://bikes.com/cdn/shop/files/Web_Instinct_MRiga_SSchultz_TobyCreekBC_MRP1442_edited.jpg?v=1711387112&width=500"
-                alt=""
-                className="w-full h-[300px] rounded-xl"
-              />
-              <h2 className="text-3xl pt-5 font-medium">
-                Высота над уровнем моря
-              </h2>
-              <p className="text-xl pb-4 text-center pt-10">Величие эндуро</p>
-              <p className="text-xl pb-4 text-center">
-                Будь то гоночные трассы или воскресные заезды, Altitude поможет
-                вам. Специально разработанный и проверенный в гонках, он является
-                идеальным инструментом для эндуро, позволяющим преодолевать крутые
-                трассы и ускорять каждую тренировку.
-              </p>
-            </div>
+
+       
+
+
+        <section className="py-12 md:py-16 bg-blue-600 text-white">
+          <div className="max-w-4xl mx-auto text-center px-4">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6"
+            >
+              Готовы к приключениям?
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-lg md:text-xl mb-6 md:mb-8 max-w-3xl mx-auto"
+            >
+              Смотрите все велосипеды в нашем магазине
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
+              <Link
+                to="/bikes"
+                className="inline-block bg-white text-blue-600 hover:bg-gray-100 font-medium py-3 px-8 md:py-4 md:px-10 rounded-lg transition-colors duration-300 text-base md:text-lg"
+              >
+                Перейти в магазин
+              </Link>
+            </motion.div>
           </div>
-        </div>
+        </section>
       </div>
-    </>
+    </div>
   );
 };
 
 export default Main;
+
+
+
+

@@ -22,7 +22,9 @@ const TrailBikes = React.lazy(() => import("./components/pages/trailBikes/TrailB
 const Login = React.lazy(() => import("./components/pages/login/Login"));
 const ProductDetail = React.lazy(() => import("./components/pages/ProductDetail/ProductDetail"));
 const Checkout = React.lazy(() => import("./components/pages/ProductDetail/Checkout"));
+const OrderHistory = React.lazy(() => import("./components/pages/ProductDetail/OrderHistory"));
 const Altitude = React.lazy(() => import("./components/pages/altitude/Altitude"));
+
 
 const App = () => {
   return (
@@ -52,14 +54,14 @@ const App = () => {
             <Route path="/enduro" element={<Enduro />} />
             <Route path="/freerideBike" element={<FreerideBike />} />
             <Route path="/gravelBike" element={<GravelBike />} />
+            <Route path="/cart" element={<Cart />} />
             <Route path="/crossCountry" element={<CrossCountry />} />
             <Route path="/kidsBikes" element={<KidsBikes />} />
             <Route path="/trailBikes" element={<TrailBikes />} />
             <Route path="/product/:id" element={<ProductDetail />} />
-            <Route path="/cart" element={<Cart />} />
             <Route path="/Checkout" element={<Checkout />} />
             <Route path="/altitude" element={<Altitude />} />
-           
+            <Route path="/orders" element={<OrderHistory />} />
           </Routes>
         </Suspense>
       </Router>

@@ -1,49 +1,101 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useCart } from "../CartContext/CartContext";
+import { HeartIcon as HeartOutline, HeartIcon as HeartSolid } from "@heroicons/react/24/outline";
+import { motion } from "framer-motion";
 
-const FreerideProductCard = ({ product, onAddToCart }) => {
+const GravelProductCard = ({ product }) => {
+  const { toggleFavorite, isFavorite } = useCart();
+
   const bikes = [
-    product.friradeBike,
-    product.friradeBike1,
-    product.friradeBike3,
-    product.friradeBike4,
-  ].filter(Boolean); 
+    product.gravelBike1,
+    product.gravelBike2, 
+    product.gravelBike3,
+    product.gravelBike4,
+    product.gravelBike5,
+    product.gravelBike6,
+  ]
+    .filter(bike => bike && bike.name) 
+    .map((bike, index) => ({
+      ...bike,
+      uniqueId: `${product.id}-gravel-${index}`,
+      productId: product.id,
+      bikeIndex: index,
+      bikeType: 'gravel' 
+    }));
 
   if (bikes.length === 0) return null;
 
   return (
-    <div className="product-card-container">
-      {bikes.map((bike, i) => (
-        <div key={`${product.id}-${i}`} className="product-card">
-          <Link to={`/product/${product.id}?bikeIndex=${i}`} className="relative w-full group">
-            <span className="absolute top-4 left-4 bg-black text-white text-sm font-semibold px-3 py-1 rounded-lg">
-              Новое
-            </span>
-            <img
-              className="w-full h-auto max-w-[600px] object-contain transition-transform duration-300 mx-auto"
-              src={bike.image || "https://via.placeholder.com/600"} 
-              alt={bike.name}
-              loading="lazy"
-            />
-          </Link>
-          <div className="details">
-            <h2>{bike.name}</h2>
-            <p>{bike.description}</p>
-            <div className="mt-4 flex items-center">
-              <input
-                type="checkbox"
-                id={`compare-${product.id}-${i}`}
-                onChange={() => onAddToCart(bike)} 
-              />
-              <label htmlFor={`compare-${product.id}-${i}`} className="ml-2 text-sm text-gray-700">
-                + ДОБАВИТЬ ДЛЯ СРАВНЕНИЯ
-              </label>
+    <div className="w-full py-8 px-4 sm:px-6 lg:px-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        {bikes.map((bike) => (
+          <motion.div
+            key={bike.uniqueId}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="group relative bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-200"
+          >
+            <div className="absolute top-3 left-3 z-10">
+              <span className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full">
+                NEW
+              </span>
             </div>
-          </div>
-        </div>
-      ))}
+
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                toggleFavorite(bike);
+              }}
+              className={`absolute top-3 right-3 z-10 p-2 rounded-full transition-all ${
+                isFavorite(bike.uniqueId) 
+                  ? 'bg-red-500 text-white hover:bg-red-600'
+                  : 'bg-white/90 text-gray-400 hover:text-red-500'
+              }`}
+            >
+              {isFavorite(bike.uniqueId) ? (
+                <HeartSolid className="h-5 w-5" />
+              ) : (
+                <HeartOutline className="h-5 w-5" />
+              )}
+            </button>
+
+            <Link 
+              to={`/product/${product.id}?bikeId=${bike.uniqueId}&bikeIndex=${bike.bikeIndex}&bikeType=${bike.bikeType}`}
+              className="block relative pt-[80%] bg-gray-100 overflow-hidden"
+            >
+              <img
+                className="absolute top-0 left-0 w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+                src={bike.image || "/placeholder-bike.jpg"}
+                alt={bike.name}
+                loading="lazy"
+              />
+            </Link>
+
+            <div className="p-4">
+              <h3 className="text-lg font-bold text-gray-900 mb-1 line-clamp-1">{bike.name}</h3>
+              <p className="text-gray-600 text-sm line-clamp-2">{bike.description}</p>
+              <div className="flex items-center justify-between mt-4">
+                <span className="text-lg font-bold text-blue-600">
+                  {bike.price} сом
+                </span>
+                <Link 
+                  to={`/product/${product.id}?bikeId=${bike.uniqueId}&bikeIndex=${bike.bikeIndex}&bikeType=${bike.bikeType}`}
+                  className="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center"
+                >
+                  Подробнее
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 };
 
-export default FreerideProductCard;
+export default GravelProductCard;

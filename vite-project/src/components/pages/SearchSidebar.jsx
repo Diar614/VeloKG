@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import magnifier from "../../img/magnifier.svg";
-import user from "../../img/user.svg";
-import heart from "../../img/heart.svg";
-import cart from "../../img/cart.svg";
 import { motion, AnimatePresence } from "framer-motion";
 
 const SearchSidebar = ({ isSearchVisible, setSearchVisible }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [hoveredIcon, setHoveredIcon] = useState(null); 
+  const [hoveredItem, setHoveredItem] = useState(null);
+  const [hasSearched, setHasSearched] = useState(false);
 
   useEffect(() => {
     if (isSearchVisible) {
       document.body.style.overflow = "hidden";
+      // Фокусируем поле ввода при открытии
+      const timer = setTimeout(() => {
+        const input = document.querySelector(".search-input");
+        if (input) input.focus();
+      }, 300);
+      return () => clearTimeout(timer);
     } else {
       document.body.style.overflow = "";
+      setSearchTerm(""); // Сбрасываем поиск при закрытии
+      setHasSearched(false);
     }
-    return () => {
-      document.body.style.overflow = "";
-    };
   }, [isSearchVisible]);
 
   const links = [
@@ -27,29 +29,39 @@ const SearchSidebar = ({ isSearchVisible, setSearchVisible }) => {
     { to: "/enduro", label: "Ендуро велосипеды" },
     { to: "/freerideBike", label: "Фрирайд велосипеды" },
     { to: "/gravelBike", label: "Гравийные велосипеды" },
-    { to: "/crossCountry", label: "Велосипеды для кросс каунтри" },
     { to: "/kidsBikes", label: "Детские велосипеды" },
     { to: "/AskQuestion", label: "Задать вопрос" },
-    { to: "/", label: "Поддержка" },
+    { to: "/orders", label: "История заказов" },
   ];
 
-  const highlightText = (text, searchTerm) => {
-    if (!searchTerm) return text;
+  const filteredLinks = links.filter((link) =>
+    link.label.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-    const regex = new RegExp(`(${searchTerm})`, "ig");
+  const highlightText = (text, term) => {
+    if (!term) return text;
+
+    const regex = new RegExp(`(${term})`, "ig");
     const parts = text.split(regex);
 
     return parts.map((part, index) =>
-      part.toLowerCase() === searchTerm.toLowerCase() ? (
-        <span key={index} className="text-black">
+      part.toLowerCase() === term.toLowerCase() ? (
+        <span key={index} className="font-medium text-indigo-600">
           {part}
         </span>
       ) : (
-        <span key={index} className="text-gray-500">
-          {part}
-        </span>
+        part
       )
     );
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+    if (e.target.value.length > 0) {
+      setHasSearched(true);
+    } else {
+      setHasSearched(false);
+    }
   };
 
   return (
@@ -61,10 +73,9 @@ const SearchSidebar = ({ isSearchVisible, setSearchVisible }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40"
-            style={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}
+            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
             onClick={() => setSearchVisible(false)}
-          ></motion.div>
+          />
         )}
       </AnimatePresence>
 
@@ -74,49 +85,86 @@ const SearchSidebar = ({ isSearchVisible, setSearchVisible }) => {
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
-            transition={{ type: "tween", duration: 0.3 }}
-            className="fixed top-0 right-0 h-full w-150 m-4 bg-white shadow-lg z-50"
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-xl z-50 overflow-y-auto"
           >
-            <div className="p-5 flex border-b relative pt-20">
-              <div className="absolute bottom-0 left-0 w-full px-5 pb-5">
+            <div className="sticky top-0 bg-white z-10 pt-4 px-6 pb-2 border-b">
+              <div className="relative">
                 <input
                   type="text"
-                  placeholder="Введите..."
-                  className="w-full rounded border-0 focus:outline-none text-4xl"
-                  style={{
-                    zIndex: 10,
-                    position: "absolute",
-                    bottom: "10px",
-                  }}
+                  placeholder="Поиск..."
+                  className="search-input w-full py-4 text-3xl font-light border-0 focus:outline-none focus:ring-0 placeholder-gray-300"
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={handleSearchChange}
+                  autoComplete="off"
                 />
+                {searchTerm && (
+                  <button
+                    onClick={() => setSearchTerm("")}
+                    className="absolute right-0 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                )}
               </div>
             </div>
-            <div className="text-2xl pt-9 pl-10 space-y-4 font-light cursor-pointer flex flex-col justify-start items-start">
-              {links
-                .filter((link) =>
-                  link.label.toLowerCase().includes(searchTerm.toLowerCase())
-                )
-                .map((link, index) => (
+
+            <div className="p-6 space-y-3">
+              {filteredLinks.length > 0 ? (
+                filteredLinks.map((link, index) => (
                   <motion.div
                     key={index}
-                    className="transition-all duration-300"
-                    onMouseEnter={() => setHoveredIcon(index)}
-                    onMouseLeave={() => setHoveredIcon(null)}
+                    whileHover={{ x: 5 }}
+                    transition={{ type: "spring", stiffness: 300 }}
                   >
                     <Link
                       to={link.to}
-                      className={`pl-2 transition-all duration-300 ${
-                        hoveredIcon === index
-                          ? "text-black transform scale-110"
-                          : "text-gray-500"
-                      }`}
+                      className="block py-3 px-3 rounded-lg transition-colors duration-200"
+                      onMouseEnter={() => setHoveredItem(index)}
+                      onMouseLeave={() => setHoveredItem(null)}
+                      onClick={() => setSearchVisible(false)}
+                      style={{
+                        backgroundColor:
+                          hoveredItem === index ? "#f3f4f6" : "transparent",
+                      }}
                     >
-                      {highlightText(link.label, searchTerm)}
+                      <p className="text-xl font-light">
+                        {highlightText(link.label, searchTerm)}
+                      </p>
                     </Link>
                   </motion.div>
-                ))}
+                ))
+              ) : (
+                <div className="py-10 text-center">
+                  <p className="text-gray-400 text-lg">
+                    {hasSearched
+                      ? "Ничего не найдено"
+                      : "Начните вводить для поиска"}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            <div className="sticky bottom-0 bg-white border-t p-4">
+              <button
+                onClick={() => setSearchVisible(false)}
+                className="w-full py-3 px-4 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200 text-gray-700"
+              >
+                Закрыть
+              </button>
             </div>
           </motion.div>
         )}

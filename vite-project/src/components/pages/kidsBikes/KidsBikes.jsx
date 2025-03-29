@@ -4,25 +4,40 @@ import { collection, getDocs } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import { HeartIcon as HeartOutline, HeartIcon as HeartSolid } from "@heroicons/react/24/outline";
+import { useCart } from "../CartContext/CartContext";
+import Header from "../Header";
+import SearchSidebar from "../SearchSidebar";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import Slider from "../gravelBike/Slider";
-import SearchSidebar from "../SearchSidebar";
-import Header from "../Header";
-import KidsProductBike from "./KidsProductBike";
+import "./KidsBikes.css";
 
 const KidsBikes = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const swiperRef = useRef(null);
+  const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true });
+  const { toggleFavorite, isFavorite, addToCart } = useCart();
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const querySnapshot = await getDocs(collection(db, "products"));
-      const productsData = querySnapshot.docs.map((doc) => doc.data());
-      setProducts(productsData);
+      try {
+        const querySnapshot = await getDocs(collection(db, "products"));
+        const productsData = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setProducts(productsData);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchProducts();
@@ -31,81 +46,239 @@ const KidsBikes = () => {
   const slides = [
     {
       title: "Гравийные велосипеды",
-      image:
-        "https://bikes.com/cdn/shop/files/Web_Solo_MRiga_RAnderson_Saskatchewan_MRP1153.jpg?v=1679692674&width=832",
+      image: "https://bikes.com/cdn/shop/files/Web_Solo_MRiga_RAnderson_Saskatchewan_MRP1153.jpg",
       link: "/gravelBike",
     },
 
     {
-      title: "Велосипеды для кросс-кантри",
-      link: "/crossCountry",
-      image:
-        "https://bikes.com/cdn/shop/files/Web_Element_MRiga_ALN_RGauvin_BritishColumbia-3_c76b4a8a-80de-423c-9523-2f82ac032889.jpg?v=1649135431&width=832",
+      title: "Детские велосипеды",
+      image: "https://bikes.com/cdn/shop/files/JSCHPxRocky_FlowBike_img8230_HR.webp?v=1709062812&width=800",
+      link: "/kidsBikes",
     },
-
     {
-      title: "Велосипеды для эндуро",
-      image:
-        "https://bikes.com/cdn/shop/files/DTP_9833.jpg?v=1663868402&width=832",
+      title: "Ендуро",
+      image: "https://bikes.com/cdn/shop/files/Web_Altitude_MRiga_RGauvin_KamloopsBC_MRP9972_1.jpg?v=1711491455&width=800",
       link: "/enduro",
     },
+
+
   ];
 
   const handleDotClick = (index) => {
-    swiperRef.current.swiper.slideTo(index);
+    if (swiperRef.current?.swiper) {
+      swiperRef.current.swiper.slideTo(index);
+    }
     setActiveIndex(index);
   };
 
-  return (
-    <div>
-      <div
-        className="w-full h-[1200px] relative bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('https://bikes.com/cdn/shop/files/MRP0478.jpg?v=1732204250&width=2000')",
-        }}
-      >
-        <SearchSidebar
-          isSearchVisible={isSearchVisible}
-          setSearchVisible={setSearchVisible}
-        />
-        <div className="relative z-10">
-          <Header
-            isSearchVisible={isSearchVisible}
-            setSearchVisible={setSearchVisible}
-          />
-          <h1 className="text-xl font-light text-white text-center pt-60 sm:pt-60 lg:pt-80 px-4 sm:px-8 lg:px-16 ">
-            Предстоящее путешествие начинается здесь
-          </h1>
-          <h1 className="text-9xlxl sm:text-6xl md:text-7xl font-light text-white text-center px-4 sm:px-8 lg:px-16 pt-10">
-            Детские велосипеды
-          </h1>
-        </div>
-      </div>
-      <div className="flex flex-col items-center justify-center text-center py-20 px-[15%]">
+  const KidsProductCard = ({ product }) => {
+    const bikes = [
+      product.KidsBike1,
+      product.KidsBike2,
+      product.KidsBike3,
+      product.KidsBike4,
+      product.KidsBike5
+    ]
+      .filter(bike => bike?.name)
+      .map((bike, index) => ({
+        ...bike,
+        uniqueId: `${product.id}-kids-${index}`,
+        productId: product.id,
+        bikeIndex: index,
+        bikeType: "kids",
+        ageRange: bike.ageRange || "4-8 лет",
+        wheelSize: bike.wheelSize || "20 дюймов"
+      }));
 
-        <p className="text-5xl font-bold mx-auto pt-10">
-        Приступим
-        </p>
-        <h1 className="text-[25px] font-light pt-15">
-        Учитесь кататься? Начните здесь. Просто, надежно и с несколькими размерами колес, чтобы подойти для разных возрастных групп детей
-        </h1>
-      </div>
-      <div className="product-list px-[15%]">
-        {products.map((product, index) => (
-          <KidsProductBike key={index} product={product} />
+    if (!bikes.length) return null;
+
+    const bikeGroups = [
+      {
+        title: "Первые шаги",
+        description: "Идеальные велосипеды для самых маленьких",
+        bikes: bikes.slice(0, 1)
+      },
+      {
+        title: "Для уверенных райдеров",
+        description: "Модели для детей, освоивших базовые навыки",
+        bikes: bikes.slice(1, 3)
+      },
+      {
+        title: "Для опытных гонщиков",
+        description: "Профессиональные модели для продвинутых юных спортсменов",
+        bikes: bikes.slice(3)
+      }
+    ].filter(group => group.bikes.length > 0);
+
+    return (
+      <div className="product-group-container">
+        {bikeGroups.map((group, groupIndex) => (
+          <React.Fragment key={`group-${groupIndex}`}>
+            <div className="product-group-header">
+              <h3>{group.title}</h3>
+              <p>{group.description}</p>
+            </div>
+            
+            <div className="compact-bike-grid">
+              {group.bikes.map((bike, bikeIndex) => (
+                <motion.div
+                  key={bike.uniqueId}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2, delay: bikeIndex * 0.1 }}
+                  className="compact-bike-card"
+                  whileHover={{ y: -3 }}
+                >
+                  <div className="card-badge">NEW</div>
+                  
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      toggleFavorite(bike);
+                    }}
+                    className={`favorite-btn ${isFavorite(bike.uniqueId) ? 'active' : ''}`}
+                  >
+                    {isFavorite(bike.uniqueId) ? (
+                      <HeartSolid className="icon" />
+                    ) : (
+                      <HeartOutline className="icon" />
+                    )}
+                  </button>
+
+                  <Link 
+                    to={`/product/${product.id}?bikeIndex=${bike.bikeIndex}&bikeType=kids`}
+                    className="compact-bike-image-link"
+                  >
+                    <img
+                      src={bike.image || "/placeholder-bike.jpg"}
+                      alt={bike.name}
+                      loading="lazy"
+                      className="compact-bike-image"
+                    />
+                  </Link>
+
+                  <div className="compact-bike-details">
+                    <h3 className="compact-bike-title">{bike.name}</h3>
+                    <div className="compact-bike-specs">
+                      <span className="age-range">{bike.ageRange}</span>
+                      <span className="wheel-size">{bike.wheelSize}</span>
+                    </div>
+                    <p className="compact-bike-price">{bike.price} сом</p>
+                    
+                    <div className="compact-bike-actions">
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          addToCart(bike);
+                        }}
+                        className="compact-add-to-cart"
+                      >
+                        В корзину
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </React.Fragment>
         ))}
       </div>
+    );
+  };
 
-      <div className="swiper-container overflow-x-hidden">
-        <Slider
-          slides={slides}
-          activeIndex={activeIndex}
-          setActiveIndex={setActiveIndex}
-          swiperRef={swiperRef}
-          handleDotClick={handleDotClick}
-        />
-      </div>
+  return (
+    <div className="kids-page">
+      <Header 
+        isSearchVisible={isSearchVisible}
+        setSearchVisible={setSearchVisible}
+      />
+      
+      <SearchSidebar
+        isSearchVisible={isSearchVisible}
+        setSearchVisible={setSearchVisible}
+      />
+
+      <section className="hero-section">
+        <div className="hero-image">
+          <img
+            src="https://bikes.com/cdn/shop/files/MRP0478.jpg"
+            alt="Kids bikes"
+          />
+          <div className="overlay"></div>
+        </div>
+        <div className="hero-content">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <p className="subtitle">Предстоящее путешествие начинается здесь</p>
+            <h1>Детские велосипеды</h1>
+          </motion.div>
+        </div>
+      </section>
+
+      <section ref={ref} className="intro-section">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+          className="intro-content"
+        >
+          <h2>Приступим</h2>
+          <div className="divider"></div>
+          <p>
+            Учитесь кататься? Начните здесь. Просто, надежно и с несколькими размерами колес, 
+            чтобы подойти для разных возрастных групп детей
+          </p>
+        </motion.div>
+      </section>
+
+      <section className="products-section">
+        {isLoading ? (
+          <div className="loader">
+            <div className="spinner"></div>
+          </div>
+        ) : (
+          <div className="products-container">
+            {products.map(product => (
+              <KidsProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="slider-section">
+        <h2>Другие категории</h2>
+        <div className="divider"></div>
+        
+        <Swiper
+          ref={swiperRef}
+          modules={[Navigation, Pagination]}
+          spaceBetween={20}
+          slidesPerView={1}
+          breakpoints={{
+            640: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 }
+          }}
+          pagination={{ clickable: true }}
+          className="category-slider"
+        >
+          {slides.map((slide, index) => (
+            <SwiperSlide key={index}>
+              <motion.div whileHover={{ y: -5 }} className="slide-card">
+                <img src={slide.image} alt={slide.title} />
+                <div className="slide-content">
+                  <h3>{slide.title}</h3>
+                  <Link to={slide.link} className="slide-link">
+                    Подробнее
+                  </Link>
+                </div>
+              </motion.div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </section>
     </div>
   );
 };

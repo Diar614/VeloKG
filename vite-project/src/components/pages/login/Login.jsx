@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
-import { auth } from "../../firebaseConfig"; // импортируем конфигурацию Firebase
+import { auth } from "../../firebaseConfig"; 
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -8,9 +8,9 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [resetEmail, setResetEmail] = useState("");  // Состояние для email для восстановления
-  const [resetError, setResetError] = useState("");  // Ошибка при восстановлении пароля
-  const [isResetMode, setIsResetMode] = useState(false);  // Режим восстановления пароля
+  const [resetEmail, setResetEmail] = useState("");  
+  const [resetError, setResetError] = useState(""); 
+  const [isResetMode, setIsResetMode] = useState(false); 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -33,12 +33,12 @@ const Login = () => {
   };
 
   const handlePasswordReset = async () => {
-    setResetError(""); // очищаем предыдущие ошибки
+    setResetError(""); и
 
     try {
       await sendPasswordResetEmail(auth, resetEmail);
       alert("Ссылка для сброса пароля отправлена на ваш email.");
-      setIsResetMode(false); // возвращаем на форму входа
+      setIsResetMode(false);
     } catch (err) {
       if (err.code === "auth/invalid-email") {
         setResetError("Неверный email.");

@@ -62,6 +62,15 @@ const ProductDetail = () => {
               data.gravelBike4,
               data.gravelBike5,
               data.gravelBike6,
+              data.friradeBike,
+              data.friradeBike1,
+              data.friradeBike3,
+              data.friradeBike4,
+              data.KidsBike1,
+              data.KidsBike2,
+              data.KidsBike3,
+              data.KidsBike4,
+              data.KidsBike5,
             ].filter(Boolean),
           });
         } else {

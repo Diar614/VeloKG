@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import magnifier from "../../img/magnifier.svg";
 import user from "../../img/user.svg";
-
 import cart from "../../img/cart.svg";
 import "./Header.css";
 

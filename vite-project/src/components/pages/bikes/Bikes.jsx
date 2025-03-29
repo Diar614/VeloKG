@@ -1,12 +1,16 @@
-import { GlobeAltIcon } from "@heroicons/react/24/outline";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { HeartIcon as HeartOutline, HeartIcon as HeartSolid } from "@heroicons/react/24/outline";
+import { useCart } from "../CartContext/CartContext";
 import { db } from "../../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
+import "./Bikes.css";
 
 const Bikes = () => {
   const [products, setProducts] = useState(null);
   const [error, setError] = useState(null);
+  const { toggleFavorite, isFavorite, addToCart } = useCart();
 
   const fetchProducts = async () => {
     try {
@@ -33,7 +37,7 @@ const Bikes = () => {
 
   if (error) {
     return (
-      <div className="error">
+      <div className="error-message">
         <h2>Error Loading Products</h2>
         <p>{error}</p>
       </div>
@@ -41,16 +45,20 @@ const Bikes = () => {
   }
 
   if (products === null) {
-    return <div className="loading">Loading products...</div>;
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p>Loading products...</p>
+      </div>
+    );
   }
-
 
   const allBikes = products.flatMap(product => {
     const bikeTypes = [
       'gravelBike1', 'gravelBike2', 'gravelBike3', 
       'gravelBike4', 'gravelBike5', 'gravelBike6',
       'friradeBike', 'friradeBike1', 'friradeBike3', 'friradeBike4',
-      'KidsBike1', 'KidsBike2', 'KidsBike3', 'KidsBike4', 'KidsBike5'
+      'KidsBike1', 'KidsBike2', 'KidsBike3', 'KidsBike4'
     ];
 
     return bikeTypes
@@ -59,13 +67,14 @@ const Bikes = () => {
         ...product[type],
         productId: product.id,
         bikeType: type,
-        bikeIndex: index
+        bikeIndex: index,
+        uniqueId: `${product.id}-${type}-${index}`
       }));
   });
 
   if (allBikes.length === 0) {
     return (
-      <div className="no-products">
+      <div className="no-products-found">
         <h2>No bikes found</h2>
         <p>Please check back later or contact support</p>
       </div>
@@ -73,19 +82,46 @@ const Bikes = () => {
   }
 
   return (
-    <div className="all-products-container">
-      <h1 className="all-products-title">All Bikes ({allBikes.length})</h1>
+    <div className="bikes-container">
+      <div className="bikes-header">
+        <h1>Все велосипеды <span>({allBikes.length})</span></h1>
+      </div>
       
-      <div className="products-grid">
+      <div className="bikes-grid">
         {allBikes.map((bike, index) => (
-          <div key={`${bike.productId}-${bike.bikeType}-${index}`} className="product-card">
+          <motion.div
+            key={bike.uniqueId}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.05 }}
+            className="bike-card"
+            whileHover={{ y: -5 }}
+          >
+            <div className="card-badge">NEW</div>
+            
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                toggleFavorite(bike);
+              }}
+              className={`favorite-button ${
+                isFavorite(bike.uniqueId) ? 'favorited' : ''
+              }`}
+              aria-label={isFavorite(bike.uniqueId) ? "Remove from favorites" : "Add to favorites"}
+            >
+              {isFavorite(bike.uniqueId) ? (
+                <HeartSolid className="heart-icon" />
+              ) : (
+                <HeartOutline className="heart-icon" />
+              )}
+            </button>
+
             <Link 
               to={`/product/${bike.productId}?bikeIndex=${bike.bikeIndex}`} 
-              className="relative w-full group"
+              className="bike-image-link"
             >
-              <span className="badge-new">New</span>
               <img
-                className="product-image"
+                className="bike-image"
                 src={bike.image || "/images/default-bike.jpg"}
                 alt={bike.name || "Bike image"}
                 loading="lazy"
@@ -93,15 +129,32 @@ const Bikes = () => {
                   e.target.src = "/images/default-bike.jpg";
                 }}
               />
-              <div className="product-details">
-                <h2>{bike.name || "Unnamed Bike"}</h2>
-                <p>{bike.description || bike.decription || "No description available"}</p>
-                {bike.price && (
-                  <p className="price">Price: {bike.price}</p>
-                )}
-              </div>
             </Link>
-          </div>
+
+            <div className="bike-details">
+              <h2>{bike.name || "Unnamed Bike"}</h2>
+              <p className="bike-description">
+                {bike.description || bike.decription || "No description available"}
+              </p>
+              
+              <div className="bike-footer">
+                {bike.price && (
+                  <p className="bike-price">{bike.price} сом</p>
+                )}
+                
+                <div className="bike-actions">
+
+                  
+                  <Link
+                    to={`/product/${bike.productId}?bikeIndex=${bike.bikeIndex}`}
+                    className="view-details"
+                  >
+                    Детали
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         ))}
       </div>
     </div>

@@ -1,0 +1,425 @@
+/* KidsBikes.css */
+
+/* Base Styles */
+.kids-page {
+  font-family: 'Inter', sans-serif;
+  color: #333;
+  background: #fff;
+}
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  height: 60vh;
+  min-height: 400px;
+  overflow: hidden;
+}
+
+.hero-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.hero-content {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  padding: 0 20px;
+  z-index: 2;
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.hero-content .subtitle {
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+/* Intro Section */
+.intro-section {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  background: #fff;
+}
+
+.intro-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.intro-content h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.divider {
+  width: 60px;
+  height: 3px;
+  background: #3b82f6;
+  margin: 1rem auto 1.5rem;
+}
+
+.intro-content p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+  padding: 0 1rem;
+}
+
+/* Products Section */
+.products-section {
+  padding: 2rem 1rem;
+  background: #f9fafb;
+}
+
+.products-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.product-group-container {
+  margin-bottom: 2rem;
+}
+
+.product-group-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding: 0 1rem;
+}
+
+.product-group-header h3 {
+  font-size: 1.5rem;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+.product-group-header p {
+  color: #64748b;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Compact Bike Grid */
+.compact-bike-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding: 0 0.5rem;
+}
+
+.compact-bike-card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e7eb;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.compact-bike-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: #3b82f6;
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  z-index: 2;
+}
+
+.favorite-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: white;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.favorite-btn.active {
+  background: #ef4444;
+  color: white;
+}
+
+.favorite-btn .icon {
+  width: 16px;
+  height: 16px;
+}
+
+.compact-bike-image-link {
+  display: block;
+  padding-top: 80%;
+  position: relative;
+  background: #f8fafc;
+}
+
+.compact-bike-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 1rem;
+}
+
+.compact-bike-details {
+  padding: 0.8rem;
+}
+
+.compact-bike-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.compact-bike-specs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.compact-bike-specs span {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.age-range {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.wheel-size {
+  background: #f0fdf4;
+  color: #166534;
+}
+
+.compact-bike-price {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #3b82f6;
+  margin-bottom: 0.8rem;
+}
+
+.compact-bike-actions {
+  display: flex;
+}
+
+.compact-add-to-cart {
+  width: 100%;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.compact-add-to-cart:hover {
+  background: #2563eb;
+}
+
+/* Slider Section */
+.slider-section {
+  padding: 3rem 1rem;
+  text-align: center;
+  background: #fff;
+}
+
+.slider-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.category-slider {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.slide-card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.slide-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.slide-content {
+  padding: 1.2rem;
+  text-align: center;
+}
+
+.slide-content h3 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.slide-link {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  background: white;
+  border: 1px solid #3b82f6;
+  color: #3b82f6;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.slide-link:hover {
+  background: #3b82f6;
+  color: white;
+}
+
+/* Loader */
+.loader {
+  display: flex;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (min-width: 640px) {
+  .compact-bike-grid {
+    gap: 1.2rem;
+    padding: 0 1rem;
+  }
+  
+  .compact-bike-card {
+    border-radius: 10px;
+  }
+  
+  .compact-bike-title {
+    font-size: 1rem;
+  }
+  
+  .compact-bike-specs span {
+    font-size: 0.8rem;
+  }
+  
+  .compact-bike-price {
+    font-size: 1.1rem;
+  }
+  
+  .compact-add-to-cart {
+    padding: 0.6rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-section {
+    height: 70vh;
+    min-height: 500px;
+  }
+  
+  .hero-content h1 {
+    font-size: 3rem;
+  }
+  
+  .hero-content .subtitle {
+    font-size: 1.25rem;
+  }
+  
+  .intro-section {
+    padding: 4rem 2rem;
+  }
+  
+  .intro-content h2 {
+    font-size: 2.2rem;
+  }
+  
+  .products-section {
+    padding: 3rem 1.5rem;
+  }
+  
+  .compact-bike-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .compact-bike-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    padding: 0;
+  }
+  
+  .compact-bike-card {
+    border-radius: 12px;
+  }
+}
